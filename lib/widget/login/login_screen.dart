@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:user_authentication/widget/login/login_form.dart';
 
-class LoginScreen extends StatefulWidget {
+class AuthenticationScreen extends StatefulWidget {
   final Function(Map<String, dynamic>) onLogin;
   final Function(String) onForgotPassword;
   final Function(Map<String, dynamic>) onSignUp;
 
-  LoginScreen(
+  AuthenticationScreen(
       {required this.onForgotPassword,
       required this.onLogin,
       required this.onSignUp});
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _AuthenticationScreenState createState() => _AuthenticationScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _AuthenticationScreenState extends State<AuthenticationScreen> {
   var _isLoading = false;
   bool isError = false;
   String errorMessage = "";
