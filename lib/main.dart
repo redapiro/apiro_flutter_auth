@@ -48,9 +48,9 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: AuthenticationScreen(
-        onForgotPassword: (email) {},
-        onLogin: (data) {},
-        onSignUp: (data) {},
+        onForgotPassword: (email, completer) {},
+        onLogin: (data, completer) {},
+        onSignUp: (data, completer) {},
       ),
     );
   }

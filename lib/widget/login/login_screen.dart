@@ -1,10 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:user_authentication/widget/login/login_form.dart';
 
 class AuthenticationScreen extends StatefulWidget {
-  final Function(Map<String, dynamic>) onLogin;
-  final Function(String) onForgotPassword;
-  final Function(Map<String, dynamic>) onSignUp;
+  final Function(Map<String, dynamic>, Completer) onLogin;
+  final Function(String, Completer) onForgotPassword;
+  final Function(Map<String, dynamic>, Completer) onSignUp;
 
   AuthenticationScreen(
       {required this.onForgotPassword,
@@ -19,6 +21,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   var _isLoading = false;
   bool isError = false;
   String errorMessage = "";
+  late Completer signupLoginCompleter;
 
   void _submitLoginForm(
     String email,
@@ -30,11 +33,20 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
     bool isLogin,
     BuildContext ctx,
   ) async {
+    _isLoading = true;
+    setState(() {});
+    if (signupLoginCompleter == null) {
+      signupLoginCompleter = Completer();
+      signupLoginCompleter.future.whenComplete(() {
+        _isLoading = false;
+        setState(() {});
+      });
+    }
     if (isLogin) {
       widget.onLogin({
         'email': email,
         'password': password,
-      });
+      }, signupLoginCompleter);
     } else {
       widget.onSignUp({
         'first_name': firstName,
@@ -42,7 +54,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
         'email': email,
         'password': password,
         'image': image,
-      });
+      }, signupLoginCompleter);
     }
   }
 
@@ -50,7 +62,9 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
-      body: LoginForm(_submitLoginForm, _isLoading, widget.onForgotPassword),
+      body: LoginForm(_submitLoginForm, _isLoading, (email) {
+        widget.onForgotPassword(email, signupLoginCompleter);
+      }),
     );
   }
 }
