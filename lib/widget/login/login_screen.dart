@@ -35,13 +35,13 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   ) async {
     _isLoading = true;
     setState(() {});
-    
-      signupLoginCompleter = Completer();
-      signupLoginCompleter.future.whenComplete(() {
-        _isLoading = false;
-        setState(() {});
-      });
-    
+
+    signupLoginCompleter = Completer();
+    signupLoginCompleter.future.whenComplete(() {
+      _isLoading = false;
+      if (mounted) setState(() {});
+    });
+
     if (isLogin) {
       widget.onLogin({
         'email': email,
