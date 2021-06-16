@@ -3,14 +3,15 @@ import 'package:user_authentication/support_files/common_widgets/adaptive/adapti
 import 'package:user_authentication/support_files/common_widgets/adaptive/text_field/app_text_field.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
-  ForgotPasswordScreen({required this.isLoading});
+  ForgotPasswordScreen(
+      {required this.isLoading, required this.onForgotPassword});
 
   final _formKey = GlobalKey<FormState>();
   dynamic? _userImageFile;
   final bool isLoading;
   var _userEmail = '';
   late BuildContext context;
-
+  Function(String) onForgotPassword;
   late ThemeData _themeData;
 
   @override
@@ -48,5 +49,8 @@ class ForgotPasswordScreen extends StatelessWidget {
   void _trySubmit() {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(this.context).unfocus();
+    if (isValid) {
+      this.onForgotPassword(_userEmail);
+    }
   }
 }

@@ -47,7 +47,11 @@ class MyApp extends StatelessWidget {
               )),
         ),
       ),
-      home: LoginScreen(),
+      home: LoginScreen(
+        onForgotPassword: (email) {},
+        onLogin: (data) {},
+        onSignUp: (data) {},
+      ),
     );
   }
 }

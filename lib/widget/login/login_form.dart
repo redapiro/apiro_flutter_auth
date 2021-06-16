@@ -13,9 +13,11 @@ class LoginForm extends StatefulWidget {
   LoginForm(
     this.submitFn,
     this.isLoading,
+    this.onForgotPassword,
   );
 
   final bool isLoading;
+  final Function(String) onForgotPassword;
   final void Function(
     String email,
     String password,
@@ -163,6 +165,7 @@ class _LoginFormState extends State<LoginForm> {
     if (_isForgotPassword) {
       return ForgotPasswordScreen(
         isLoading: widget.isLoading,
+        onForgotPassword: widget.onForgotPassword,
       );
     }
     return !_isLogin
