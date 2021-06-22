@@ -11,11 +11,12 @@ import 'package:url_launcher/url_launcher.dart';
 
 class LoginForm extends StatefulWidget {
   LoginForm(this.submitFn, this.isLoading, this.onForgotPassword,
-      {this.imageWidget});
+      {this.imageWidget, this.onGoogleSignInClick});
 
   final bool isLoading;
   final Widget? imageWidget;
   final Function(String) onForgotPassword;
+  final Function()? onGoogleSignInClick;
   final void Function(
     String email,
     String password,
@@ -84,12 +85,13 @@ class _LoginFormState extends State<LoginForm> {
         constraints: BoxConstraints(maxWidth: 450),
         child: Column(
           children: [
-            widget.imageWidget ?? Container(
-              width: 120,
-              height: 60,
-              child: 
-                  Image.asset("assets/images/logo.png", fit: BoxFit.cover),
-            ),
+            widget.imageWidget ??
+                Container(
+                  width: 120,
+                  height: 60,
+                  child:
+                      Image.asset("assets/images/logo.png", fit: BoxFit.cover),
+                ),
             SizedBox(height: 20),
             Card(
               elevation: 2.0,
@@ -340,7 +342,11 @@ class _LoginFormState extends State<LoginForm> {
     print("Sign in with microsoft clicked");
   }
 
-  void _onSignInWithGoogleClick() async {}
+  void _onSignInWithGoogleClick() async {
+    if (widget.onGoogleSignInClick != null) {
+      widget.onGoogleSignInClick!();
+    }
+  }
 
   void _onSignInWithAWSClick() {
     print("sign in with aws clicked");
