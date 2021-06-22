@@ -84,11 +84,11 @@ class _LoginFormState extends State<LoginForm> {
         constraints: BoxConstraints(maxWidth: 450),
         child: Column(
           children: [
-            Container(
+            widget.imageWidget ?? Container(
               width: 120,
               height: 60,
-              child: widget.imageWidget ??
-                  Image.asset("assets/images/logo.png", fit: BoxFit.contain),
+              child: 
+                  Image.asset("assets/images/logo.png", fit: BoxFit.cover),
             ),
             SizedBox(height: 20),
             Card(
