@@ -7,12 +7,14 @@ class AuthenticationScreen extends StatefulWidget {
   final Function(Map<String, dynamic>, Completer) onLogin;
   final Function(String, Completer) onForgotPassword;
   final Function(Map<String, dynamic>, Completer) onSignUp;
+  final Function()? onGoogleSignInClick;
   final Widget? imageWidget;
 
   AuthenticationScreen(
       {required this.onForgotPassword,
       required this.onLogin,
       required this.onSignUp,
+      this.onGoogleSignInClick,
       this.imageWidget});
 
   @override
@@ -71,6 +73,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
           widget.onForgotPassword(email, signupLoginCompleter);
         },
         imageWidget: widget.imageWidget,
+        onGoogleSignInClick: widget.onGoogleSignInClick,
       ),
     );
   }
