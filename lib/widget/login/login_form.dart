@@ -86,9 +86,9 @@ class _LoginFormState extends State<LoginForm> {
           children: [
             Container(
               width: 120,
-              height: 50,
+              height: 60,
               child: widget.imageWidget ??
-                  Image.asset("assets/images/logo.png", fit: BoxFit.cover),
+                  Image.asset("assets/images/logo.png", fit: BoxFit.contain),
             ),
             SizedBox(height: 20),
             Card(
