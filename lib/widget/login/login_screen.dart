@@ -7,11 +7,13 @@ class AuthenticationScreen extends StatefulWidget {
   final Function(Map<String, dynamic>, Completer) onLogin;
   final Function(String, Completer) onForgotPassword;
   final Function(Map<String, dynamic>, Completer) onSignUp;
+  final Widget? imageWidget;
 
   AuthenticationScreen(
       {required this.onForgotPassword,
       required this.onLogin,
-      required this.onSignUp});
+      required this.onSignUp,
+      this.imageWidget});
 
   @override
   _AuthenticationScreenState createState() => _AuthenticationScreenState();
@@ -62,9 +64,14 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
-      body: LoginForm(_submitLoginForm, _isLoading, (email) {
-        widget.onForgotPassword(email, signupLoginCompleter);
-      }),
+      body: LoginForm(
+        _submitLoginForm,
+        _isLoading,
+        (email) {
+          widget.onForgotPassword(email, signupLoginCompleter);
+        },
+        imageWidget: widget.imageWidget,
+      ),
     );
   }
 }

@@ -10,13 +10,11 @@ import 'package:user_authentication/widget/sign_up/sign_up_form.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LoginForm extends StatefulWidget {
-  LoginForm(
-    this.submitFn,
-    this.isLoading,
-    this.onForgotPassword,
-  );
+  LoginForm(this.submitFn, this.isLoading, this.onForgotPassword,
+      {this.imageWidget});
 
   final bool isLoading;
+  final Widget? imageWidget;
   final Function(String) onForgotPassword;
   final void Function(
     String email,
@@ -89,7 +87,8 @@ class _LoginFormState extends State<LoginForm> {
             Container(
               width: 120,
               height: 50,
-              child: Image.asset("assets/images/logo.png", fit: BoxFit.cover),
+              child: widget.imageWidget ??
+                  Image.asset("assets/images/logo.png", fit: BoxFit.cover),
             ),
             SizedBox(height: 20),
             Card(
