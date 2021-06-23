@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/gestures.dart';
@@ -16,7 +17,7 @@ class LoginForm extends StatefulWidget {
   final bool isLoading;
   final Widget? imageWidget;
   final Function(String) onForgotPassword;
-  final Function()? onGoogleSignInClick;
+  final Function(Completer)? onGoogleSignInClick;
   final void Function(
     String email,
     String password,
@@ -43,6 +44,8 @@ class _LoginFormState extends State<LoginForm> {
   var _userPassword = '';
   dynamic? _userImageFile = File("dummy.txt");
   ThemeData? _themeData;
+  late Completer googleLoginCompleter;
+  bool googleSignInLoading = false;
 
   void _trySubmit() {
     final isValid = _formKey.currentState!.validate();
@@ -233,12 +236,14 @@ class _LoginFormState extends State<LoginForm> {
           SizedBox(height: 15),
           _getHorizontalSeparatorLine(),
           SizedBox(height: 15),
-          _getSocialLoginButton(
-              imagePath: "assets/images/google.png",
-              title: "Sign In With Google",
-              onPress: () {
-                _onSignInWithGoogleClick();
-              }),
+          (googleSignInLoading)
+              ? CircularProgressIndicator()
+              : _getSocialLoginButton(
+                  imagePath: "assets/images/google.png",
+                  title: "Sign In With Google",
+                  onPress: () {
+                    _onSignInWithGoogleClick();
+                  }),
           /*
           SizedBox(height: 15),
           _getSocialLoginButton(
@@ -343,8 +348,16 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   void _onSignInWithGoogleClick() async {
+    googleSignInLoading = true;
+    setState(() {});
+    googleLoginCompleter = Completer();
+
+    googleLoginCompleter.future.whenComplete(() {
+      googleSignInLoading = false;
+      if (mounted) setState(() {});
+    });
     if (widget.onGoogleSignInClick != null) {
-      widget.onGoogleSignInClick!();
+      widget.onGoogleSignInClick!(googleLoginCompleter);
     }
   }
 

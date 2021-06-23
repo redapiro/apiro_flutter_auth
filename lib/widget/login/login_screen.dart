@@ -7,7 +7,7 @@ class AuthenticationScreen extends StatefulWidget {
   final Function(Map<String, dynamic>, Completer) onLogin;
   final Function(String, Completer) onForgotPassword;
   final Function(Map<String, dynamic>, Completer) onSignUp;
-  final Function()? onGoogleSignInClick;
+  final Function(Completer)? onGoogleSignInClick;
   final Widget? imageWidget;
 
   AuthenticationScreen(
@@ -26,6 +26,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   bool isError = false;
   String errorMessage = "";
   late Completer signupLoginCompleter;
+  
 
   void _submitLoginForm(
     String email,
@@ -41,6 +42,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
     setState(() {});
 
     signupLoginCompleter = Completer();
+
     signupLoginCompleter.future.whenComplete(() {
       _isLoading = false;
       if (mounted) setState(() {});
