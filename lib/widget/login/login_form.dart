@@ -12,12 +12,32 @@ import 'package:url_launcher/url_launcher.dart';
 
 class LoginForm extends StatefulWidget {
   LoginForm(this.submitFn, this.isLoading, this.onForgotPassword,
-      {this.imageWidget, this.onGoogleSignInClick});
+      {this.imageWidget,
+      this.onGoogleSignInClick,
+      this.onAppleSignInClick,
+      this.onFacebookSignInClick,
+      this.onGithubSignInClick,
+      this.onMicrosoftSignInClick,
+      this.isFacebookSignInAvailable,
+      this.isGoogleSignInAvailable,
+      this.isMicrosoftSignInAvailable,
+      this.isGithubSignInAvailable,
+      this.isAppleSignInAvailable});
 
   final bool isLoading;
   final Widget? imageWidget;
   final Function(String) onForgotPassword;
   final Function(Completer)? onGoogleSignInClick;
+  final Function(Completer)? onAppleSignInClick;
+  final Function(Completer)? onMicrosoftSignInClick;
+  final Function(Completer)? onGithubSignInClick;
+  final Function(Completer)? onFacebookSignInClick;
+  final bool? isFacebookSignInAvailable;
+  final bool? isGoogleSignInAvailable;
+  final bool? isMicrosoftSignInAvailable;
+  final bool? isGithubSignInAvailable;
+  final bool? isAppleSignInAvailable;
+
   final void Function(
     String email,
     String password,
@@ -45,7 +65,15 @@ class _LoginFormState extends State<LoginForm> {
   dynamic? _userImageFile = File("dummy.txt");
   ThemeData? _themeData;
   late Completer googleLoginCompleter;
+  late Completer microsoftLoginCompleter;
+  late Completer githubLoginCompleter;
+  late Completer facebookLoginCompleter;
+  late Completer appleLoginCompleter;
   bool googleSignInLoading = false;
+  bool appleSignInLoading = false;
+  bool githubSignInLoading = false;
+  bool facebookSignInLoading = false;
+  bool microsoftSignInLoading = false;
 
   void _trySubmit() {
     final isValid = _formKey.currentState!.validate();
@@ -238,26 +266,54 @@ class _LoginFormState extends State<LoginForm> {
           SizedBox(height: 15),
           (googleSignInLoading)
               ? CircularProgressIndicator()
-              : _getSocialLoginButton(
-                  imagePath: "assets/images/google.png",
-                  title: "Sign In With Google",
-                  onPress: () {
-                    _onSignInWithGoogleClick();
-                  }),
+              : (widget.isGoogleSignInAvailable!)
+                  ? _getSocialLoginButton(
+                      imagePath: "assets/images/google.png",
+                      title: "Sign In With Google",
+                      onPress: () {
+                        _onSignInWithGoogleClick();
+                      })
+                  : Container(),
           SizedBox(height: 15),
-          _getSocialLoginButton(
-              imagePath: "assets/images/microsoft.png",
-              title: "Sign In With Microsoft",
-              onPress: () {
-                _onSignInWithMicroSoftClick();
-              }),
+          if (widget.isMicrosoftSignInAvailable!)
+            (microsoftSignInLoading)
+                ? CircularProgressIndicator()
+                : _getSocialLoginButton(
+                    imagePath: "assets/images/microsoft.png",
+                    title: "Sign In With Microsoft",
+                    onPress: () {
+                      _onSignInWithMicroSoftClick();
+                    }),
           SizedBox(height: 15),
-          _getSocialLoginButton(
-              imagePath: "assets/images/apple_logo.png",
-              title: "Sign In With Apple",
-              onPress: () {
-                _onSignInWithAppleClick();
-              }),
+          if (widget.isAppleSignInAvailable!)
+            (appleSignInLoading)
+                ? CircularProgressIndicator()
+                : _getSocialLoginButton(
+                    imagePath: "assets/images/apple_logo.png",
+                    title: "Sign In With Apple",
+                    onPress: () {
+                      _onSignInWithAppleClick();
+                    }),
+          SizedBox(height: 15),
+          if (widget.isGithubSignInAvailable!)
+            (githubSignInLoading)
+                ? CircularProgressIndicator()
+                : _getSocialLoginButton(
+                    imagePath: "assets/images/github.png",
+                    title: "Sign In With GitHub",
+                    onPress: () {
+                      _onSignInWithGitHubClick();
+                    }),
+          SizedBox(height: 15),
+          if (widget.isFacebookSignInAvailable!)
+            (facebookSignInLoading)
+                ? CircularProgressIndicator()
+                : _getSocialLoginButton(
+                    imagePath: "assets/images/facebook.png",
+                    title: "Sign In With Facebook",
+                    onPress: () {
+                      _onSignInWithFacebookClick();
+                    }),
           /* SizedBox(height: 15),
           _getSocialLoginButton(
               imagePath: "assets/images/amazon.png",
@@ -360,11 +416,45 @@ class _LoginFormState extends State<LoginForm> {
     }
   }
 
-  void _onSignInWithAWSClick() {
-    print("sign in with aws clicked");
+  void _onSignInWithGitHubClick() {
+    githubSignInLoading = true;
+    setState(() {});
+    githubLoginCompleter = Completer();
+
+    githubLoginCompleter.future.whenComplete(() {
+      githubSignInLoading = false;
+      if (mounted) setState(() {});
+    });
+    if (widget.onGithubSignInClick != null) {
+      widget.onGithubSignInClick!(githubLoginCompleter);
+    }
+  }
+
+  void _onSignInWithFacebookClick() {
+    facebookSignInLoading = true;
+    setState(() {});
+    facebookLoginCompleter = Completer();
+
+    facebookLoginCompleter.future.whenComplete(() {
+      facebookSignInLoading = false;
+      if (mounted) setState(() {});
+    });
+    if (widget.onFacebookSignInClick != null) {
+      widget.onFacebookSignInClick!(facebookLoginCompleter);
+    }
   }
 
   void _onSignInWithAppleClick() {
-    print("sign in with apple clicked");
+    appleSignInLoading = true;
+    setState(() {});
+    appleLoginCompleter = Completer();
+
+    appleLoginCompleter.future.whenComplete(() {
+      appleSignInLoading = false;
+      if (mounted) setState(() {});
+    });
+    if (widget.onAppleSignInClick != null) {
+      widget.onAppleSignInClick!(appleLoginCompleter);
+    }
   }
 }
