@@ -244,22 +244,21 @@ class _LoginFormState extends State<LoginForm> {
                   onPress: () {
                     _onSignInWithGoogleClick();
                   }),
-          /*
           SizedBox(height: 15),
           _getSocialLoginButton(
               imagePath: "assets/images/microsoft.png",
-              title: appLocale.sign_in_with_microsoft,
+              title: "Sign In With Microsoft",
               onPress: () {
                 _onSignInWithMicroSoftClick();
               }),
           SizedBox(height: 15),
           _getSocialLoginButton(
               imagePath: "assets/images/apple_logo.png",
-              title: appLocale.label_sign_in_with_apple,
+              title: "Sign In With Apple",
               onPress: () {
                 _onSignInWithAppleClick();
               }),
-          SizedBox(height: 15),
+          /* SizedBox(height: 15),
           _getSocialLoginButton(
               imagePath: "assets/images/amazon.png",
               title: appLocale.sign_in_with_aws,
