@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:user_authentication/support_files/common_widgets/adaptive/adaptive_elevated_button.dart';
 import 'package:user_authentication/support_files/common_widgets/adaptive/text_field/app_text_field.dart';
 import 'package:user_authentication/support_files/common_widgets/user_image_picker/user_image_picker.dart';
+import 'package:user_authentication/utils/validator.dart';
 
 class SignUpFormScreen extends StatefulWidget {
   final bool isLoading;
@@ -34,6 +35,7 @@ class _SignUpFormScreen extends State<SignUpFormScreen> {
   final _formKey = GlobalKey<FormState>();
   dynamic? _userImageFile;
   var _userPassword = '';
+  var _userConfirmPassword = '';
   late BuildContext context;
 
   late ThemeData _themeData;
@@ -105,11 +107,30 @@ class _SignUpFormScreen extends State<SignUpFormScreen> {
               validator: (value) {
                 if (value!.isEmpty || value.length < 7) {
                   return "Password should be 7 characters long";
+                } else if(!Validators().validateStrongPassword(value)) {
+                  return "Password should contain at least one special character, one capital letter and should have at least 8 characters";
                 }
                 return null;
               },
               onSaved: (value) {
                 _userPassword = value!;
+              },
+              // controller: TextEditingController(),
+            ),
+            SizedBox(height: 15),
+            AppTextField(
+              label: "Confirm Password",
+              isPasswordField: true,
+              validator: (value) {
+                if (value!.isEmpty || value.length < 7) {
+                  return "Password should be 7 characters long";
+                } else if (value != _userPassword) {
+                  return "Confirm password and password field should be same";
+                }
+                return null;
+              },
+              onSaved: (value) {
+                _userConfirmPassword = value!;
               },
               // controller: TextEditingController(),
             ),
