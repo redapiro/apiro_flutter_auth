@@ -37,6 +37,7 @@ class _SignUpFormScreen extends State<SignUpFormScreen> {
   var _userPassword = '';
   var _userConfirmPassword = '';
   late BuildContext context;
+  TextEditingController _passwordController = TextEditingController();
 
   late ThemeData _themeData;
 
@@ -104,10 +105,11 @@ class _SignUpFormScreen extends State<SignUpFormScreen> {
             AppTextField(
               label: "Password",
               isPasswordField: true,
+              controller: _passwordController,
               validator: (value) {
                 if (value!.isEmpty || value.length < 7) {
                   return "Password should be 7 characters long";
-                } else if(!Validators().validateStrongPassword(value)) {
+                } else if (!Validators().validateStrongPassword(value)) {
                   return "Password should contain at least one special character, one capital letter and should have at least 8 characters";
                 }
                 return null;
@@ -124,7 +126,7 @@ class _SignUpFormScreen extends State<SignUpFormScreen> {
               validator: (value) {
                 if (value!.isEmpty || value.length < 7) {
                   return "Password should be 7 characters long";
-                } else if (value != _userPassword) {
+                } else if (value != _passwordController.text.trim()) {
                   return "Confirm password and password field should be same";
                 }
                 return null;
