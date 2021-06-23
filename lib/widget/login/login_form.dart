@@ -398,7 +398,17 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   void _onSignInWithMicroSoftClick() {
-    print("Sign in with microsoft clicked");
+    microsoftSignInLoading = true;
+    setState(() {});
+    microsoftLoginCompleter = Completer();
+
+    microsoftLoginCompleter.future.whenComplete(() {
+      microsoftSignInLoading = false;
+      if (mounted) setState(() {});
+    });
+    if (widget.onMicrosoftSignInClick != null) {
+      widget.onMicrosoftSignInClick!(microsoftLoginCompleter);
+    }
   }
 
   void _onSignInWithGoogleClick() async {
