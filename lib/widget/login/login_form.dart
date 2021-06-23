@@ -273,7 +273,7 @@ class _LoginFormState extends State<LoginForm> {
                         _onSignInWithGoogleClick();
                       })
                   : Container(),
-          SizedBox(height: 15),
+          if (widget.isMicrosoftSignInAvailable!) SizedBox(height: 15),
           if (widget.isMicrosoftSignInAvailable!)
             (microsoftSignInLoading)
                 ? CircularProgressIndicator()
@@ -283,7 +283,7 @@ class _LoginFormState extends State<LoginForm> {
                     onPress: () {
                       _onSignInWithMicroSoftClick();
                     }),
-          SizedBox(height: 15),
+          if (widget.isAppleSignInAvailable!) SizedBox(height: 15),
           if (widget.isAppleSignInAvailable!)
             (appleSignInLoading)
                 ? CircularProgressIndicator()
@@ -293,7 +293,7 @@ class _LoginFormState extends State<LoginForm> {
                     onPress: () {
                       _onSignInWithAppleClick();
                     }),
-          SizedBox(height: 15),
+          if (widget.isGithubSignInAvailable!) SizedBox(height: 15),
           if (widget.isGithubSignInAvailable!)
             (githubSignInLoading)
                 ? CircularProgressIndicator()
@@ -303,7 +303,7 @@ class _LoginFormState extends State<LoginForm> {
                     onPress: () {
                       _onSignInWithGitHubClick();
                     }),
-          SizedBox(height: 15),
+          if (widget.isFacebookSignInAvailable!) SizedBox(height: 15),
           if (widget.isFacebookSignInAvailable!)
             (facebookSignInLoading)
                 ? CircularProgressIndicator()
