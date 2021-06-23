@@ -263,7 +263,6 @@ class _LoginFormState extends State<LoginForm> {
           ]),
           SizedBox(height: 15),
           _getHorizontalSeparatorLine(),
-          SizedBox(height: 15),
           (googleSignInLoading)
               ? CircularProgressIndicator()
               : (widget.isGoogleSignInAvailable!)
@@ -274,7 +273,6 @@ class _LoginFormState extends State<LoginForm> {
                         _onSignInWithGoogleClick();
                       })
                   : Container(),
-          SizedBox(height: 15),
           if (widget.isMicrosoftSignInAvailable!)
             (microsoftSignInLoading)
                 ? CircularProgressIndicator()
@@ -284,7 +282,6 @@ class _LoginFormState extends State<LoginForm> {
                     onPress: () {
                       _onSignInWithMicroSoftClick();
                     }),
-          SizedBox(height: 15),
           if (widget.isAppleSignInAvailable!)
             (appleSignInLoading)
                 ? CircularProgressIndicator()
@@ -294,7 +291,6 @@ class _LoginFormState extends State<LoginForm> {
                     onPress: () {
                       _onSignInWithAppleClick();
                     }),
-          SizedBox(height: 15),
           if (widget.isGithubSignInAvailable!)
             (githubSignInLoading)
                 ? CircularProgressIndicator()
@@ -304,7 +300,6 @@ class _LoginFormState extends State<LoginForm> {
                     onPress: () {
                       _onSignInWithGitHubClick();
                     }),
-          SizedBox(height: 15),
           if (widget.isFacebookSignInAvailable!)
             (facebookSignInLoading)
                 ? CircularProgressIndicator()
@@ -344,6 +339,7 @@ class _LoginFormState extends State<LoginForm> {
       onTap: onPress,
       child: Container(
           height: 50,
+          margin: EdgeInsets.only(top: 15),
           decoration: BoxDecoration(
               border: Border.all(
                 color: _themeData!.disabledColor,
