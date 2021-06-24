@@ -21,8 +21,10 @@ class LoginForm extends StatefulWidget {
       this.onMicrosoftSignInClick,
       this.isFacebookSignInAvailable,
       this.isGoogleSignInAvailable,
+      this.onLoginWithApiroClick,
       this.isMicrosoftSignInAvailable,
       this.isGithubSignInAvailable,
+      this.isLoginWithApiroVisible = false,
       this.isAppleSignInAvailable});
 
   final bool isLoading;
@@ -33,11 +35,13 @@ class LoginForm extends StatefulWidget {
   final Function(Completer)? onMicrosoftSignInClick;
   final Function(Completer)? onGithubSignInClick;
   final Function(Completer)? onFacebookSignInClick;
+  final Function(Completer)? onLoginWithApiroClick;
   final bool? isFacebookSignInAvailable;
   final bool? isGoogleSignInAvailable;
   final bool? isMicrosoftSignInAvailable;
   final bool? isGithubSignInAvailable;
   final bool? isAppleSignInAvailable;
+  final bool? isLoginWithApiroVisible;
 
   final void Function(
     String email,
@@ -65,16 +69,9 @@ class _LoginFormState extends State<LoginForm> {
   var _userPassword = '';
   dynamic? _userImageFile = File("dummy.txt");
   ThemeData? _themeData;
-  late Completer googleLoginCompleter;
-  late Completer microsoftLoginCompleter;
-  late Completer githubLoginCompleter;
-  late Completer facebookLoginCompleter;
-  late Completer appleLoginCompleter;
-  bool googleSignInLoading = false;
-  bool appleSignInLoading = false;
-  bool githubSignInLoading = false;
-  bool facebookSignInLoading = false;
-  bool microsoftSignInLoading = false;
+  late Completer loginWithApiroCompleter;
+
+  bool isLoginWithApiroLoading = false;
   bool isSignUpWithSocialButtonAvailable = true;
 
   void _trySubmit() {
@@ -289,6 +286,7 @@ class _LoginFormState extends State<LoginForm> {
           SizedBox(height: 15),
           _getHorizontalSeparatorLine(),
           _getSocialLoginAvailableButtons(),
+          _getDebugDemoUserButton(),
           /* SizedBox(height: 15),
           _getSocialLoginButton(
               imagePath: "assets/images/amazon.png",
@@ -363,6 +361,28 @@ class _LoginFormState extends State<LoginForm> {
   Widget _getHorizontalSeparatorLine() {
     return Container(
         height: 1, width: double.maxFinite, color: AppColors.separatorColor);
+  }
+
+  Widget _getDebugDemoUserButton() {
+    if (widget.isLoginWithApiroVisible ?? false) {
+      if (isLoginWithApiroLoading) return CircularProgressIndicator();
+      return AdaptiveElevatedButton(
+        text: "Login With Apiro",
+        onPressed: () {
+          this.loginWithApiroCompleter = Completer();
+          this.isLoginWithApiroLoading = true;
+          this.loginWithApiroCompleter.future.whenComplete(() {
+            setState(() {
+              this.isLoginWithApiroLoading = false;
+            });
+          });
+          widget.onLoginWithApiroClick!(this.loginWithApiroCompleter);
+          setState(() {});
+        },
+      );
+    } else {
+      return Container();
+    }
   }
 
   void _onForgotPasswordTap() {
