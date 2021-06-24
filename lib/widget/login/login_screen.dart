@@ -47,7 +47,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   var _isLoading = false;
   bool isError = false;
   String errorMessage = "";
-  late Completer signupLoginCompleter;
+  Completer signupLoginCompleter = Completer();
 
   void _submitLoginForm(
     String email,
@@ -61,8 +61,6 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   ) async {
     _isLoading = true;
     setState(() {});
-
-    signupLoginCompleter = Completer();
 
     signupLoginCompleter.future.whenComplete(() {
       _isLoading = false;
