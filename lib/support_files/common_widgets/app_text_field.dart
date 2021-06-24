@@ -97,6 +97,7 @@ class _AppTextFieldState extends State<AppTextField> {
                   (widget.isPasswordField ?? false) ? obscureTextFlag : false,
               controller: widget.controller,
               decoration: InputDecoration(
+                  errorMaxLines: 2,
                   enabledBorder: widget.border ?? border,
                   focusedBorder: widget.border ?? border,
                   border: widget.border ?? border,

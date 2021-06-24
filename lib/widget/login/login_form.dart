@@ -9,6 +9,7 @@ import 'package:user_authentication/utils/app_colors.dart';
 import 'package:user_authentication/widget/forgot_password/forgot_password_form.dart';
 import 'package:user_authentication/widget/sign_up/sign_up_form.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:user_authentication/widget/social_button/social_button_widget.dart';
 
 class LoginForm extends StatefulWidget {
   LoginForm(this.submitFn, this.isLoading, this.onForgotPassword,
@@ -74,6 +75,7 @@ class _LoginFormState extends State<LoginForm> {
   bool githubSignInLoading = false;
   bool facebookSignInLoading = false;
   bool microsoftSignInLoading = false;
+  bool isSignUpWithSocialButtonAvailable = true;
 
   void _trySubmit() {
     final isValid = _formKey.currentState!.validate();
@@ -200,12 +202,35 @@ class _LoginFormState extends State<LoginForm> {
         onForgotPassword: widget.onForgotPassword,
       );
     }
-    return !_isLogin
-        ? SignUpFormScreen(
-            isLoading: widget.isLoading,
-            submitFn: widget.submitFn,
+
+    if (!_isLogin) {
+      if (isSignUpWithSocialButtonAvailable) {
+        return Column(children: [
+          _getSocialLoginAvailableButtons(),
+          SizedBox(height: 15),
+          AdaptiveElevatedButton(
+            text: "SignUp With Email",
+            onPressed: () {
+              this.isSignUpWithSocialButtonAvailable = false;
+              setState(() {});
+            },
           )
-        : _getLoginForm();
+        ]);
+      } else {
+        return SignUpFormScreen(
+          isLoading: widget.isLoading,
+          submitFn: widget.submitFn,
+        );
+      }
+    } else {
+      return _getLoginForm();
+    }
+    // return !_isLogin
+    //     ? SignUpFormScreen(
+    //         isLoading: widget.isLoading,
+    //         submitFn: widget.submitFn,
+    //       )
+    //     : _getLoginForm();
   }
 
   Widget _getLoginForm() {
@@ -262,57 +287,7 @@ class _LoginFormState extends State<LoginForm> {
             )
           ]),
           SizedBox(height: 15),
-          _getHorizontalSeparatorLine(),
-          (googleSignInLoading)
-              ? CircularProgressIndicator()
-              : (widget.isGoogleSignInAvailable!)
-                  ? _getSocialLoginButton(
-                      imagePath: "assets/images/google.png",
-                      title: "Sign In With Google",
-                      onPress: () {
-                        _onSignInWithGoogleClick();
-                      })
-                  : Container(),
-          if (widget.isMicrosoftSignInAvailable!) SizedBox(height: 15),
-          if (widget.isMicrosoftSignInAvailable!)
-            (microsoftSignInLoading)
-                ? CircularProgressIndicator()
-                : _getSocialLoginButton(
-                    imagePath: "assets/images/microsoft.png",
-                    title: "Sign In With Microsoft",
-                    onPress: () {
-                      _onSignInWithMicroSoftClick();
-                    }),
-          if (widget.isAppleSignInAvailable!) SizedBox(height: 15),
-          if (widget.isAppleSignInAvailable!)
-            (appleSignInLoading)
-                ? CircularProgressIndicator()
-                : _getSocialLoginButton(
-                    imagePath: "assets/images/apple_logo.png",
-                    title: "Sign In With Apple",
-                    onPress: () {
-                      _onSignInWithAppleClick();
-                    }),
-          if (widget.isGithubSignInAvailable!) SizedBox(height: 15),
-          if (widget.isGithubSignInAvailable!)
-            (githubSignInLoading)
-                ? CircularProgressIndicator()
-                : _getSocialLoginButton(
-                    imagePath: "assets/images/github.png",
-                    title: "Sign In With GitHub",
-                    onPress: () {
-                      _onSignInWithGitHubClick();
-                    }),
-          if (widget.isFacebookSignInAvailable!) SizedBox(height: 15),
-          if (widget.isFacebookSignInAvailable!)
-            (facebookSignInLoading)
-                ? CircularProgressIndicator()
-                : _getSocialLoginButton(
-                    imagePath: "assets/images/facebook.png",
-                    title: "Sign In With Facebook",
-                    onPress: () {
-                      _onSignInWithFacebookClick();
-                    }),
+          _getSocialLoginAvailableButtons(),
           /* SizedBox(height: 15),
           _getSocialLoginButton(
               imagePath: "assets/images/amazon.png",
@@ -324,6 +299,114 @@ class _LoginFormState extends State<LoginForm> {
           SizedBox(height: 15),
         ],
       ),
+    );
+  }
+
+  Widget _getSocialLoginAvailableButtons() {
+    return Column(
+      children: [
+        _getHorizontalSeparatorLine(),
+        SocialButtonWidget(
+          onButtonPress: (completer) {
+            if (widget.onGoogleSignInClick != null) {
+              widget.onGoogleSignInClick!(completer);
+            }
+          },
+          title: "Sign In With Google",
+          isAvailable: (widget.isGoogleSignInAvailable ?? false),
+          imagePath: "assets/images/google.png",
+        ),
+        SocialButtonWidget(
+          onButtonPress: (completer) {
+            if (widget.onMicrosoftSignInClick != null) {
+              widget.onMicrosoftSignInClick!(completer);
+            }
+          },
+          title: "Sign In With MicroSoft",
+          isAvailable: (widget.isMicrosoftSignInAvailable ?? false),
+          imagePath: "assets/images/microsoft.png",
+        ),
+        SocialButtonWidget(
+          onButtonPress: (completer) {
+            if (widget.onGithubSignInClick != null) {
+              widget.onGithubSignInClick!(completer);
+            }
+          },
+          title: "Sign In With Github",
+          isAvailable: (widget.isGithubSignInAvailable ?? false),
+          imagePath: "assets/images/github.png",
+        ),
+        SocialButtonWidget(
+          onButtonPress: (completer) {
+            if (widget.onAppleSignInClick != null) {
+              widget.onGithubSignInClick!(completer);
+            }
+          },
+          title: "Sign In With Apple",
+          isAvailable: (widget.isAppleSignInAvailable ?? false),
+          imagePath: "assets/images/apple_logo.png",
+        ),
+        SocialButtonWidget(
+          onButtonPress: (completer) {
+            if (widget.onFacebookSignInClick != null) {
+              widget.onFacebookSignInClick!(completer);
+            }
+          },
+          title: "Sign In With Facebook",
+          isAvailable: (widget.isFacebookSignInAvailable ?? false),
+          imagePath: "assets/images/facebook.png",
+        ),
+        // (googleSignInLoading)
+        //     ? CircularProgressIndicator()
+        //     : (widget.isGoogleSignInAvailable!)
+        //         ? _getSocialLoginButton(
+        //             imagePath: "assets/images/google.png",
+        //             title: "Sign In With Google",
+        //             onPress: () {
+        //               _onSignInWithGoogleClick();
+        //             })
+        //         : Container(),
+        // if (widget.isMicrosoftSignInAvailable!) SizedBox(height: 15),
+        // if (widget.isMicrosoftSignInAvailable!)
+        //   (microsoftSignInLoading)
+        //       ? CircularProgressIndicator()
+        //       : _getSocialLoginButton(
+        //           imagePath: "assets/images/microsoft.png",
+        //           title: "Sign In With Microsoft",
+        //           onPress: () {
+        //             _onSignInWithMicroSoftClick();
+        //           }),
+        // if (widget.isAppleSignInAvailable!) SizedBox(height: 15),
+        // if (widget.isAppleSignInAvailable!)
+        //   (appleSignInLoading)
+        //       ? CircularProgressIndicator()
+        //       : _getSocialLoginButton(
+        //           imagePath: "assets/images/apple_logo.png",
+        //           title: "Sign In With Apple",
+        //           onPress: () {
+        //             _onSignInWithAppleClick();
+        //           }),
+        // if (widget.isGithubSignInAvailable!) SizedBox(height: 15),
+        // if (widget.isGithubSignInAvailable!)
+        //   (githubSignInLoading)
+        //       ? CircularProgressIndicator()
+        //       : _getSocialLoginButton(
+        //           imagePath: "assets/images/github.png",
+        //           title: "Sign In With GitHub",
+        //           onPress: () {
+        //             _onSignInWithGitHubClick();
+        //           }),
+        // if (widget.isFacebookSignInAvailable!) SizedBox(height: 15),
+        // if (widget.isFacebookSignInAvailable!)
+        //   (facebookSignInLoading)
+        //       ? CircularProgressIndicator()
+        //       : _getSocialLoginButton(
+        //           imagePath: "assets/images/facebook.png",
+        //           title: "Sign In With Facebook",
+        //           onPress: () {
+        //             _onSignInWithFacebookClick();
+        //           }),
+      ],
     );
   }
 
