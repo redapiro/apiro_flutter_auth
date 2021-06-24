@@ -44,6 +44,7 @@ class SocialButtonWidget extends StatelessWidget {
     return InkWell(
       onTap: () {
         buttonLoader = Completer();
+        buttonLoaderNotifier.value = true;
         buttonLoader.future.whenComplete(() {
           this.buttonLoaderNotifier.value = false;
         });
