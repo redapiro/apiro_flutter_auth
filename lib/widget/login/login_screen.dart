@@ -12,11 +12,13 @@ class AuthenticationScreen extends StatefulWidget {
   final Function(Completer)? onMicroSoftSignInClick;
   final Function(Completer)? onGithubSignInClick;
   final Function(Completer)? onFacebookSignInClick;
+  final Function(Completer)? onLoginWithApiroClick;
   final bool isMicrosoftLoginAvailable;
   final bool isGoogleLoginAvailable;
   final bool isGithubLoginAvailable;
   final bool isFacebookLoginAvailable;
   final bool isAppleLoginAvailable;
+  final bool isLoginWithApiroVisible;
   final Widget? imageWidget;
 
   AuthenticationScreen(
@@ -29,9 +31,11 @@ class AuthenticationScreen extends StatefulWidget {
       this.onMicroSoftSignInClick,
       this.onGithubSignInClick,
       this.onFacebookSignInClick,
+      this.onLoginWithApiroClick,
       this.isMicrosoftLoginAvailable = false,
       this.isGoogleLoginAvailable = false,
       this.isGithubLoginAvailable = false,
+      this.isLoginWithApiroVisible = false,
       this.isFacebookLoginAvailable = false,
       this.isAppleLoginAvailable = false});
 
@@ -102,6 +106,8 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
         isGithubSignInAvailable: widget.isGithubLoginAvailable,
         isGoogleSignInAvailable: widget.isGoogleLoginAvailable,
         isMicrosoftSignInAvailable: widget.isMicrosoftLoginAvailable,
+        isLoginWithApiroVisible: widget.isLoginWithApiroVisible,
+        onLoginWithApiroClick: widget.onLoginWithApiroClick,
       ),
     );
   }
