@@ -296,7 +296,7 @@ class _LoginFormState extends State<LoginForm> {
                 _onSignInWithAWSClick();
               }),
           */
-          // SizedBox(height: 15),
+          SizedBox(height: 15),
         ],
       ),
     );

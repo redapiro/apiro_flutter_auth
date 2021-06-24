@@ -51,6 +51,7 @@ class MyApp extends StatelessWidget {
         onForgotPassword: (email, completer) {},
         onLogin: (data, completer) {},
         onSignUp: (data, completer) {},
+        isLoginWithApiroVisible: true,
       ),
     );
   }

@@ -24,7 +24,7 @@ class SocialButtonWidget extends StatelessWidget {
     _themeData = Theme.of(context);
 
     return Container(
-      margin: EdgeInsets.only(top: 15),
+      margin: EdgeInsets.only(top: isAvailable ? 15 : 0),
       child: ValueListenableBuilder<bool>(
         valueListenable: buttonLoaderNotifier,
         builder: (context, value, child) {
