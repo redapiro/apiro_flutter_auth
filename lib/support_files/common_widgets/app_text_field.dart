@@ -89,7 +89,7 @@ class _AppTextFieldState extends State<AppTextField> {
               key: ValueKey(widget.label),
               validator: widget.validator,
               style: widget.textStyle,
-              maxLines: widget.noOfLines ?? 1,
+              maxLines: widget.noOfLines ?? 2,
               enableSuggestions: widget.enableSuggestions ?? false,
               autocorrect: widget.autocorrect ?? false,
               inputFormatters: widget.inputFormatters,
@@ -97,7 +97,9 @@ class _AppTextFieldState extends State<AppTextField> {
                   (widget.isPasswordField ?? false) ? obscureTextFlag : false,
               controller: widget.controller,
               decoration: InputDecoration(
+                  helperMaxLines: 2,
                   errorMaxLines: 2,
+                  hintMaxLines: 2,
                   enabledBorder: widget.border ?? border,
                   focusedBorder: widget.border ?? border,
                   border: widget.border ?? border,

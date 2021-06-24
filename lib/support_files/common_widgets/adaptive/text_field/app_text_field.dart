@@ -102,6 +102,7 @@ class _AppTextFieldState extends State<AppTextField> {
                   focusedBorder: widget.border ?? border,
                   border: widget.border ?? border,
                   errorBorder: null,
+                  errorMaxLines: 4,
                   focusedErrorBorder: null,
                   disabledBorder: widget.border ?? border,
                   // suffixIcon: (widget.isPasswordField ?? false)
