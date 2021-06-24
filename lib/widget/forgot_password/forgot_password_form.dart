@@ -1,18 +1,31 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:user_authentication/support_files/common_widgets/adaptive/adaptive_elevated_button.dart';
 import 'package:user_authentication/support_files/common_widgets/adaptive/text_field/app_text_field.dart';
 
-class ForgotPasswordScreen extends StatelessWidget {
-  ForgotPasswordScreen(
-      {required this.isLoading, required this.onForgotPassword});
+class ForgotPasswordScreen extends StatefulWidget {
+  ForgotPasswordScreen({required this.onForgotPassword});
 
+  Function(String, Completer) onForgotPassword;
+
+  @override
+  _ForgotPasswordScreenState createState() => _ForgotPasswordScreenState();
+}
+
+class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
+
   dynamic? _userImageFile;
-  final bool isLoading;
+
   var _userEmail = '';
+
   late BuildContext context;
-  Function(String) onForgotPassword;
+
   late ThemeData _themeData;
+
+  late Completer forgotPasswordCompleter;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +62,22 @@ class ForgotPasswordScreen extends StatelessWidget {
   void _trySubmit() {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(this.context).unfocus();
+    print("forgot pas should load");
     if (isValid) {
-      this.onForgotPassword(_userEmail);
+      forgotPasswordCompleter = Completer();
+      this.isLoading = true;
+      forgotPasswordCompleter.future.whenComplete(() {
+        this.isLoading = false;
+        setState(() {});
+      });
+      this.widget.onForgotPassword(_userEmail, forgotPasswordCompleter);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Email is not valid"),
+          backgroundColor: Theme.of(context).errorColor,
+        ),
+      );
     }
   }
 }

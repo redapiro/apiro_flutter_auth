@@ -29,7 +29,7 @@ class LoginForm extends StatefulWidget {
 
   final bool isLoading;
   final Widget? imageWidget;
-  final Function(String) onForgotPassword;
+  final Function(String, Completer) onForgotPassword;
   final Function(Completer)? onGoogleSignInClick;
   final Function(Completer)? onAppleSignInClick;
   final Function(Completer)? onMicrosoftSignInClick;
@@ -195,8 +195,9 @@ class _LoginFormState extends State<LoginForm> {
   Widget _getAuthForm() {
     if (_isForgotPassword) {
       return ForgotPasswordScreen(
-        isLoading: widget.isLoading,
-        onForgotPassword: widget.onForgotPassword,
+        onForgotPassword: (email, completer) {
+          widget.onForgotPassword(email, completer);
+        },
       );
     }
 
@@ -364,25 +365,16 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   Widget _getDebugDemoUserButton() {
-    if (widget.isLoginWithApiroVisible ?? false) {
-      if (isLoginWithApiroLoading) return CircularProgressIndicator();
-      return AdaptiveElevatedButton(
-        text: "Login With Apiro",
-        onPressed: () {
-          this.loginWithApiroCompleter = Completer();
-          this.isLoginWithApiroLoading = true;
-          this.loginWithApiroCompleter.future.whenComplete(() {
-            setState(() {
-              this.isLoginWithApiroLoading = false;
-            });
-          });
-          widget.onLoginWithApiroClick!(this.loginWithApiroCompleter);
-          setState(() {});
-        },
-      );
-    } else {
-      return Container();
-    }
+    return SocialButtonWidget(
+      onButtonPress: (completer) {
+        if (widget.onLoginWithApiroClick != null) {
+          widget.onLoginWithApiroClick!(completer);
+        }
+      },
+      title: "Sign In With Apiro",
+      isAvailable: (widget.isLoginWithApiroVisible ?? false),
+      imagePath: "assets/images/apiro_logo.png",
+    );
   }
 
   void _onForgotPasswordTap() {

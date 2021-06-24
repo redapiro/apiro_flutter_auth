@@ -92,9 +92,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
       body: LoginForm(
         _submitLoginForm,
         _isLoading,
-        (email) {
-          widget.onForgotPassword(email, signupLoginCompleter);
-        },
+        widget.onForgotPassword,
         imageWidget: widget.imageWidget,
         onGoogleSignInClick: widget.onGoogleSignInClick,
         onAppleSignInClick: widget.onAppleSignInClick,
