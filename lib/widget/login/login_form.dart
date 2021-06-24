@@ -207,7 +207,6 @@ class _LoginFormState extends State<LoginForm> {
       if (isSignUpWithSocialButtonAvailable) {
         return Column(children: [
           _getSocialLoginAvailableButtons(),
-          SizedBox(height: 15),
           AdaptiveElevatedButton(
             text: "Sign Up With Email",
             onPressed: () {
@@ -288,6 +287,7 @@ class _LoginFormState extends State<LoginForm> {
             )
           ]),
           SizedBox(height: 15),
+          _getHorizontalSeparatorLine(),
           _getSocialLoginAvailableButtons(),
           /* SizedBox(height: 15),
           _getSocialLoginButton(
@@ -306,7 +306,6 @@ class _LoginFormState extends State<LoginForm> {
   Widget _getSocialLoginAvailableButtons() {
     return Column(
       children: [
-        _getHorizontalSeparatorLine(),
         SocialButtonWidget(
           onButtonPress: (completer) {
             if (widget.onGoogleSignInClick != null) {
@@ -323,7 +322,7 @@ class _LoginFormState extends State<LoginForm> {
               widget.onMicrosoftSignInClick!(completer);
             }
           },
-          title: "Sign In With MicroSoft",
+          title: "Sign In With Microsoft",
           isAvailable: (widget.isMicrosoftSignInAvailable ?? false),
           imagePath: "assets/images/microsoft.png",
         ),
@@ -357,56 +356,6 @@ class _LoginFormState extends State<LoginForm> {
           isAvailable: (widget.isFacebookSignInAvailable ?? false),
           imagePath: "assets/images/facebook.png",
         ),
-        // (googleSignInLoading)
-        //     ? CircularProgressIndicator()
-        //     : (widget.isGoogleSignInAvailable!)
-        //         ? _getSocialLoginButton(
-        //             imagePath: "assets/images/google.png",
-        //             title: "Sign In With Google",
-        //             onPress: () {
-        //               _onSignInWithGoogleClick();
-        //             })
-        //         : Container(),
-        // if (widget.isMicrosoftSignInAvailable!) SizedBox(height: 15),
-        // if (widget.isMicrosoftSignInAvailable!)
-        //   (microsoftSignInLoading)
-        //       ? CircularProgressIndicator()
-        //       : _getSocialLoginButton(
-        //           imagePath: "assets/images/microsoft.png",
-        //           title: "Sign In With Microsoft",
-        //           onPress: () {
-        //             _onSignInWithMicroSoftClick();
-        //           }),
-        // if (widget.isAppleSignInAvailable!) SizedBox(height: 15),
-        // if (widget.isAppleSignInAvailable!)
-        //   (appleSignInLoading)
-        //       ? CircularProgressIndicator()
-        //       : _getSocialLoginButton(
-        //           imagePath: "assets/images/apple_logo.png",
-        //           title: "Sign In With Apple",
-        //           onPress: () {
-        //             _onSignInWithAppleClick();
-        //           }),
-        // if (widget.isGithubSignInAvailable!) SizedBox(height: 15),
-        // if (widget.isGithubSignInAvailable!)
-        //   (githubSignInLoading)
-        //       ? CircularProgressIndicator()
-        //       : _getSocialLoginButton(
-        //           imagePath: "assets/images/github.png",
-        //           title: "Sign In With GitHub",
-        //           onPress: () {
-        //             _onSignInWithGitHubClick();
-        //           }),
-        // if (widget.isFacebookSignInAvailable!) SizedBox(height: 15),
-        // if (widget.isFacebookSignInAvailable!)
-        //   (facebookSignInLoading)
-        //       ? CircularProgressIndicator()
-        //       : _getSocialLoginButton(
-        //           imagePath: "assets/images/facebook.png",
-        //           title: "Sign In With Facebook",
-        //           onPress: () {
-        //             _onSignInWithFacebookClick();
-        //           }),
       ],
     );
   }
@@ -414,41 +363,6 @@ class _LoginFormState extends State<LoginForm> {
   Widget _getHorizontalSeparatorLine() {
     return Container(
         height: 1, width: double.maxFinite, color: AppColors.separatorColor);
-  }
-
-  Widget _getVerticalSeparatorLine({double? height}) {
-    return Container(
-        height: height ?? 50, width: 1, color: _themeData!.disabledColor);
-  }
-
-  Widget _getSocialLoginButton(
-      {Function()? onPress, String? title, String? imagePath}) {
-    return InkWell(
-      onTap: onPress,
-      child: Container(
-          height: 50,
-          decoration: BoxDecoration(
-              border: Border.all(
-                color: _themeData!.disabledColor,
-              ),
-              borderRadius: BorderRadius.circular(5)),
-          child: Row(children: [
-            Padding(
-                padding: EdgeInsets.only(left: 10, right: 10),
-                child: Image.asset(imagePath!,
-                    width: 30, height: 30, fit: BoxFit.cover)),
-            _getVerticalSeparatorLine(),
-            Expanded(
-              child: Padding(
-                  padding: EdgeInsets.only(left: 10, right: 10),
-                  child: Text(
-                    title!,
-                    style: _themeData!.textTheme.subtitle1!
-                        .copyWith(color: _themeData!.disabledColor),
-                  )),
-            )
-          ])),
-    );
   }
 
   void _onForgotPasswordTap() {
@@ -482,75 +396,5 @@ class _LoginFormState extends State<LoginForm> {
   void _onPrivacyPolicyClick() {
     print("privacy policy pressed");
     launch("https://google.com");
-  }
-
-  void _onSignInWithMicroSoftClick() {
-    microsoftSignInLoading = true;
-    setState(() {});
-    microsoftLoginCompleter = Completer();
-
-    microsoftLoginCompleter.future.whenComplete(() {
-      microsoftSignInLoading = false;
-      if (mounted) setState(() {});
-    });
-    if (widget.onMicrosoftSignInClick != null) {
-      widget.onMicrosoftSignInClick!(microsoftLoginCompleter);
-    }
-  }
-
-  void _onSignInWithGoogleClick() async {
-    googleSignInLoading = true;
-    setState(() {});
-    googleLoginCompleter = Completer();
-
-    googleLoginCompleter.future.whenComplete(() {
-      googleSignInLoading = false;
-      if (mounted) setState(() {});
-    });
-    if (widget.onGoogleSignInClick != null) {
-      widget.onGoogleSignInClick!(googleLoginCompleter);
-    }
-  }
-
-  void _onSignInWithGitHubClick() {
-    githubSignInLoading = true;
-    setState(() {});
-    githubLoginCompleter = Completer();
-
-    githubLoginCompleter.future.whenComplete(() {
-      githubSignInLoading = false;
-      if (mounted) setState(() {});
-    });
-    if (widget.onGithubSignInClick != null) {
-      widget.onGithubSignInClick!(githubLoginCompleter);
-    }
-  }
-
-  void _onSignInWithFacebookClick() {
-    facebookSignInLoading = true;
-    setState(() {});
-    facebookLoginCompleter = Completer();
-
-    facebookLoginCompleter.future.whenComplete(() {
-      facebookSignInLoading = false;
-      if (mounted) setState(() {});
-    });
-    if (widget.onFacebookSignInClick != null) {
-      widget.onFacebookSignInClick!(facebookLoginCompleter);
-    }
-  }
-
-  void _onSignInWithAppleClick() {
-    appleSignInLoading = true;
-    setState(() {});
-    appleLoginCompleter = Completer();
-
-    appleLoginCompleter.future.whenComplete(() {
-      appleSignInLoading = false;
-      if (mounted) setState(() {});
-    });
-    if (widget.onAppleSignInClick != null) {
-      widget.onAppleSignInClick!(appleLoginCompleter);
-    }
   }
 }
