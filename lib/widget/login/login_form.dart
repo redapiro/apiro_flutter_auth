@@ -209,12 +209,13 @@ class _LoginFormState extends State<LoginForm> {
           _getSocialLoginAvailableButtons(),
           SizedBox(height: 15),
           AdaptiveElevatedButton(
-            text: "SignUp With Email",
+            text: "Sign Up With Email",
             onPressed: () {
               this.isSignUpWithSocialButtonAvailable = false;
               setState(() {});
             },
-          )
+          ),
+          SizedBox(height: 15),
         ]);
       } else {
         return SignUpFormScreen(
@@ -469,6 +470,9 @@ class _LoginFormState extends State<LoginForm> {
         _isForgotPassword = !_isForgotPassword;
       });
     } else {
+      if (_isLogin) {
+        isSignUpWithSocialButtonAvailable = true;
+      }
       setState(() {
         _isLogin = !_isLogin;
       });
