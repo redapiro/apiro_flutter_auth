@@ -90,7 +90,9 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
       body: LoginForm(
         _submitLoginForm,
         _isLoading,
-        widget.onForgotPassword,
+        (email, completer) {
+          widget.onForgotPassword(email, completer);
+        },
         imageWidget: widget.imageWidget,
         onGoogleSignInClick: widget.onGoogleSignInClick,
         onAppleSignInClick: widget.onAppleSignInClick,

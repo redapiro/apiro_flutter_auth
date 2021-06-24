@@ -26,6 +26,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   late Completer forgotPasswordCompleter;
   bool isLoading = false;
+  TextEditingController _emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +44,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               }
               return null;
             },
+            controller: _emailController,
             textInputType: TextInputType.emailAddress,
             onSaved: (value) {
               _userEmail = value!;
@@ -70,7 +72,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         this.isLoading = false;
         setState(() {});
       });
-      this.widget.onForgotPassword(_userEmail, forgotPasswordCompleter);
+      this.widget.onForgotPassword(_emailController.text.trim(), forgotPasswordCompleter);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
