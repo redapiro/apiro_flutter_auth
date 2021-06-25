@@ -140,7 +140,7 @@ class _LoginFormState extends State<LoginForm> {
                       TextSpan(
                           text: " Terms of Use ",
                           style: _themeData!.textTheme.subtitle2!
-                              .copyWith(color: _themeData!.primaryColor),
+                              .copyWith(color: AppColors.appBlueColor),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
                               _onTermsOfUserClick();
@@ -151,7 +151,7 @@ class _LoginFormState extends State<LoginForm> {
                       TextSpan(
                           text: "Privacy Policy.",
                           style: _themeData!.textTheme.subtitle2!
-                              .copyWith(color: _themeData!.primaryColor),
+                              .copyWith(color: AppColors.appBlueColor),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
                               _onPrivacyPolicyClick();
@@ -183,7 +183,7 @@ class _LoginFormState extends State<LoginForm> {
             TextSpan(
                 text: " here ",
                 style: _themeData!.textTheme.subtitle2!
-                    .copyWith(color: _themeData!.primaryColor),
+                    .copyWith(color: AppColors.appBlueColor),
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
                     _onRegisterHereClick();
@@ -214,6 +214,7 @@ class _LoginFormState extends State<LoginForm> {
       if (isSignUpWithSocialButtonAvailable) {
         return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
           _getSocialLoginAvailableButtons(),
+          SizedBox(height: 15),
           AdaptiveElevatedButton(
             text: "Sign Up With Email",
             onPressed: () {
