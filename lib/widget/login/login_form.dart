@@ -213,7 +213,7 @@ class _LoginFormState extends State<LoginForm> {
     if (!_isLogin) {
       if (isSignUpWithSocialButtonAvailable) {
         return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          _getSocialLoginAvailableButtons(),
+          _getSocialLoginAvailableButtons(isSignUp: true),
           SizedBox(height: 15),
           AdaptiveElevatedButton(
             text: "Sign Up With Email",
