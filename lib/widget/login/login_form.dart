@@ -158,29 +158,6 @@ class _LoginFormState extends State<LoginForm> {
                             }),
                     ])),
                     SizedBox(height: 5),
-                    Container(
-                      width: double.maxFinite,
-                      child: RichText(
-                          textAlign: TextAlign.start,
-                          text: TextSpan(children: [
-                            TextSpan(
-                                text: !_isLogin
-                                    ? "Already a member "
-                                    : "Not a member yet?",
-                                style: _themeData!.textTheme.subtitle2!),
-                            TextSpan(
-                                text: " here ",
-                                style: _themeData!.textTheme.subtitle2!
-                                    .copyWith(color: _themeData!.primaryColor),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    _onRegisterHereClick();
-                                  }),
-                            TextSpan(
-                                text: !_isLogin ? "Login" : "Register",
-                                style: _themeData!.textTheme.subtitle2!),
-                          ])),
-                    ),
                     SizedBox(height: 11),
                   ],
                 ),
@@ -192,18 +169,50 @@ class _LoginFormState extends State<LoginForm> {
     )));
   }
 
+  Widget _getRegisterRow() {
+    return Container(
+      // width: double.maxFinite,
+      alignment: AlignmentDirectional.bottomStart,
+      // margin: EdgeInsets.only(bottom: 10),
+      child: RichText(
+          textAlign: TextAlign.start,
+          text: TextSpan(children: [
+            TextSpan(
+                text: !_isLogin ? "Already a member " : "Not a member yet?",
+                style: _themeData!.textTheme.subtitle2!),
+            TextSpan(
+                text: " here ",
+                style: _themeData!.textTheme.subtitle2!
+                    .copyWith(color: _themeData!.primaryColor),
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () {
+                    _onRegisterHereClick();
+                  }),
+            TextSpan(
+                text: !_isLogin ? "Login" : "Register",
+                style: _themeData!.textTheme.subtitle2!),
+          ])),
+    );
+  }
+
   Widget _getAuthForm() {
     if (_isForgotPassword) {
-      return ForgotPasswordScreen(
-        onForgotPassword: (email, completer) {
-          widget.onForgotPassword(email, completer);
-        },
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          ForgotPasswordScreen(
+            onForgotPassword: (email, completer) {
+              widget.onForgotPassword(email, completer);
+            },
+          ),
+          _getRegisterRow()
+        ],
       );
     }
 
     if (!_isLogin) {
       if (isSignUpWithSocialButtonAvailable) {
-        return Column(children: [
+        return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
           _getSocialLoginAvailableButtons(),
           AdaptiveElevatedButton(
             text: "Sign Up With Email",
@@ -213,11 +222,20 @@ class _LoginFormState extends State<LoginForm> {
             },
           ),
           SizedBox(height: 15),
+          _getRegisterRow(),
+          SizedBox(height: 15),
         ]);
       } else {
-        return SignUpFormScreen(
-          isLoading: widget.isLoading,
-          submitFn: widget.submitFn,
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SignUpFormScreen(
+              isLoading: widget.isLoading,
+              submitFn: widget.submitFn,
+            ),
+            _getRegisterRow(),
+            SizedBox(height: 5)
+          ],
         );
       }
     } else {
@@ -274,7 +292,7 @@ class _LoginFormState extends State<LoginForm> {
               onPressed: _trySubmit,
             ),
           SizedBox(height: 10),
-          Row(children: [
+          Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
             InkWell(
               onTap: _onForgotPasswordTap,
               child: Text(
@@ -282,7 +300,9 @@ class _LoginFormState extends State<LoginForm> {
                 style: _themeData!.textTheme.subtitle2!
                     .copyWith(color: _themeData!.primaryColor),
               ),
-            )
+            ),
+            Expanded(child: Container()),
+            _getRegisterRow(),
           ]),
           SizedBox(height: 15),
           _getHorizontalSeparatorLine(),
