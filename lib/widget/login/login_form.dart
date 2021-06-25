@@ -322,7 +322,7 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  Widget _getSocialLoginAvailableButtons() {
+  Widget _getSocialLoginAvailableButtons({bool isSignUp = false}) {
     return Column(
       children: [
         SocialButtonWidget(
@@ -331,7 +331,7 @@ class _LoginFormState extends State<LoginForm> {
               widget.onGoogleSignInClick!(completer);
             }
           },
-          title: "Sign In With Google",
+          title: isSignUp ? "Sign Up With Google" : "Sign In With Google",
           isAvailable: (widget.isGoogleSignInAvailable ?? false),
           imagePath: "assets/images/google.png",
         ),
@@ -341,7 +341,7 @@ class _LoginFormState extends State<LoginForm> {
               widget.onMicrosoftSignInClick!(completer);
             }
           },
-          title: "Sign In With Microsoft",
+          title: isSignUp ? "Sign Up With Microsoft" : "Sign In With Microsoft",
           isAvailable: (widget.isMicrosoftSignInAvailable ?? false),
           imagePath: "assets/images/microsoft.png",
         ),
@@ -351,7 +351,7 @@ class _LoginFormState extends State<LoginForm> {
               widget.onGithubSignInClick!(completer);
             }
           },
-          title: "Sign In With Github",
+          title: isSignUp ? "Sign Up With Github" : "Sign In With Github",
           isAvailable: (widget.isGithubSignInAvailable ?? false),
           imagePath: "assets/images/github.png",
         ),
@@ -361,7 +361,7 @@ class _LoginFormState extends State<LoginForm> {
               widget.onGithubSignInClick!(completer);
             }
           },
-          title: "Sign In With Apple",
+          title: isSignUp ? "Sign Up With Apple" : "Sign In With Apple",
           isAvailable: (widget.isAppleSignInAvailable ?? false),
           imagePath: "assets/images/apple_logo.png",
         ),
@@ -371,7 +371,7 @@ class _LoginFormState extends State<LoginForm> {
               widget.onFacebookSignInClick!(completer);
             }
           },
-          title: "Sign In With Facebook",
+          title: isSignUp ? "Sign Up With Facebook" : "Sign In With Facebook",
           isAvailable: (widget.isFacebookSignInAvailable ?? false),
           imagePath: "assets/images/facebook.png",
         ),
