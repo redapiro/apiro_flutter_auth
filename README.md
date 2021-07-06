@@ -42,6 +42,7 @@ dependencies:
 7. onLogin - on login callback
 8. onSignUp - on sign up button click callback
 
+![Untitled](https://user-images.githubusercontent.com/70631810/124587887-cb670b80-de75-11eb-9434-55c60e7e4817.png)
 
 
 ```dart
