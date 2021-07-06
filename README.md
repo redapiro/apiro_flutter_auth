@@ -31,6 +31,19 @@ dependencies:
 ```
 
 ## Usage
+
+### Parameters 
+1. isLoginWithApiroVisible - Flag for testing purpose login is available
+2. isGoogleLoginAvailable - Flag for google login is available
+3. isMicrosoftLoginAvailable - Flag for microsoft login is available  
+4. onMicroSoftSignInClick - Callback on microsoft signin
+5. onGoogleSignInClick - Callback on Google Login 
+6. onLoginWithApiroClick - callback on apiro login click
+7. onLogin - on login callback
+8. onSignUp - on sign up button click callback
+
+
+
 ```dart
   import 'package:user_authentication/user_authentication.dart';
   
@@ -82,6 +95,8 @@ assets/images/logo.png
 assets/images/microsoft.png
 
 This plugin will fetch the images from these locations
+
+#### For social logins all related configurations will be done at client side (i.e. Google login client id and secret configuration)
 
 
 For help getting started with Flutter, view our 
