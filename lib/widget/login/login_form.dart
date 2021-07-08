@@ -181,6 +181,9 @@ class _LoginFormState extends State<LoginForm> {
                 text: !_isLogin ? "Already a member " : "Not a member yet?",
                 style: _themeData!.textTheme.subtitle2!),
             TextSpan(
+                text: !_isLogin ? "Login" : "Register",
+                style: _themeData!.textTheme.subtitle2!),
+            TextSpan(
                 text: " here ",
                 style: _themeData!.textTheme.subtitle2!
                     .copyWith(color: AppColors.appBlueColor),
@@ -188,10 +191,9 @@ class _LoginFormState extends State<LoginForm> {
                   ..onTap = () {
                     _onRegisterHereClick();
                   }),
-            TextSpan(
-                text: !_isLogin ? "Login" : "Register",
-                style: _themeData!.textTheme.subtitle2!),
-          ])),
+          ]
+          )
+      ),
     );
   }
 
