@@ -62,7 +62,7 @@ class _SignUpFormScreen extends State<SignUpFormScreen> {
               enableSuggestions: false,
               textCapitalization: TextCapitalization.words,
               validator: (value) {
-                if (value!.isEmpty || value.length == 3) {
+                if (value!.isEmpty || value.length < 3) {
                   return "First name should have more than 2 characters";
                 }
                 return null;
@@ -78,8 +78,8 @@ class _SignUpFormScreen extends State<SignUpFormScreen> {
               enableSuggestions: false,
               textCapitalization: TextCapitalization.words,
               validator: (value) {
-                if (value!.isEmpty || value.length == 3) {
-                  return "First name should have more than 2 characters";
+                if (value!.isEmpty || value.length < 3) {
+                  return "Last name should have more than 2 characters";
                 }
                 return null;
               },
