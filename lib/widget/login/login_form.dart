@@ -359,7 +359,7 @@ class _LoginFormState extends State<LoginForm> {
         SocialButtonWidget(
           onButtonPress: (completer) {
             if (widget.onAppleSignInClick != null) {
-              widget.onGithubSignInClick!(completer);
+              widget.onAppleSignInClick!(completer);
             }
           },
           title: isSignUp ? "Sign Up With Apple" : "Sign In With Apple",
