@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:user_authentication/support_files/common_widgets/adaptive/adaptive_elevated_button.dart';
 import 'package:user_authentication/support_files/common_widgets/adaptive/text_field/app_text_field.dart';
 import 'package:user_authentication/support_files/common_widgets/user_image_picker/user_image_picker.dart';
@@ -162,7 +163,11 @@ class _SignUpFormScreen extends State<SignUpFormScreen> {
       label: "Phone Number",
       autocorrect: true,
       enableSuggestions: false,
-      textCapitalization: TextCapitalization.words,
+      textInputType: TextInputType.number,
+
+      inputFormatters: <TextInputFormatter>[
+        FilteringTextInputFormatter.digitsOnly
+      ], // On
       validator: (value) {
         return null;
       },
