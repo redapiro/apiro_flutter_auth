@@ -81,7 +81,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
         'email': email,
         'phone_number': phoneNumber,
         'password': password,
-        'created_on': DateFormat("dd-MMM-yyyy").format(DateTime.now()),
+        'created_on': DateFormat("dd-MMM-yyyy hh:mm:ss").format(DateTime.now()),
         'image': image,
       }, signupLoginCompleter);
     }
