@@ -172,7 +172,7 @@ class _SignUpFormScreen extends State<SignUpFormScreen> {
         return null;
       },
       onSaved: (value) {
-        _firstName = value!;
+        _phoneNumber = value!;
       },
       margin: EdgeInsets.only(bottom: 15.0, top: 15.0),
     ));
