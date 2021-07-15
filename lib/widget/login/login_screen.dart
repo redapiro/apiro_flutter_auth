@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:user_authentication/widget/login/login_form.dart';
+import 'package:intl/intl.dart';
 
 class AuthenticationScreen extends StatefulWidget {
   final Function(Map<String, dynamic>, Completer) onLogin;
@@ -80,6 +81,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
         'email': email,
         'phone_number': phoneNumber,
         'password': password,
+        'created_on': DateFormat("dd-MMM-yyyy").format(DateTime.now()),
         'image': image,
       }, signupLoginCompleter);
     }
