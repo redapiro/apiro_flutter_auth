@@ -11,6 +11,7 @@ class SignUpFormScreen extends StatefulWidget {
     String password,
     String firstName,
     String lastName,
+    String phoneNumber,
     // String userName,
     dynamic? image,
     bool isLogin,
@@ -32,6 +33,7 @@ class _SignUpFormScreen extends State<SignUpFormScreen> {
   var _firstName = '';
   var _lastName = '';
   var _userEmail = '';
+  var _phoneNumber = '';
   final _formKey = GlobalKey<FormState>();
   dynamic? _userImageFile;
   var _userPassword = '';
@@ -60,6 +62,7 @@ class _SignUpFormScreen extends State<SignUpFormScreen> {
               label: "First name",
               autocorrect: true,
               enableSuggestions: false,
+              isMandatory: true,
               textCapitalization: TextCapitalization.words,
               validator: (value) {
                 if (value!.isEmpty || value.length < 3) {
@@ -75,6 +78,7 @@ class _SignUpFormScreen extends State<SignUpFormScreen> {
             AppTextField(
               label: "Last name",
               autocorrect: true,
+              isMandatory: true,
               enableSuggestions: false,
               textCapitalization: TextCapitalization.words,
               validator: (value) {
@@ -88,8 +92,10 @@ class _SignUpFormScreen extends State<SignUpFormScreen> {
               },
               margin: EdgeInsets.only(bottom: 15.0),
             ),
+            _getPhoneNumberRow(),
             AppTextField(
               label: "Email",
+              isMandatory: true,
               validator: (value) {
                 if (value!.isEmpty || !value.contains('@')) {
                   return "Enter a valid email";
@@ -104,6 +110,7 @@ class _SignUpFormScreen extends State<SignUpFormScreen> {
             SizedBox(height: 15),
             AppTextField(
               label: "Password",
+              isMandatory: true,
               isPasswordField: true,
               controller: _passwordController,
               validator: (value) {
@@ -122,6 +129,7 @@ class _SignUpFormScreen extends State<SignUpFormScreen> {
             SizedBox(height: 15),
             AppTextField(
               label: "Confirm Password",
+              isMandatory: true,
               isPasswordField: true,
               validator: (value) {
                 if (value!.isEmpty || value.length < 7) {
@@ -146,6 +154,23 @@ class _SignUpFormScreen extends State<SignUpFormScreen> {
             SizedBox(height: 10),
           ],
         ));
+  }
+
+  Widget _getPhoneNumberRow() {
+    return Container(
+        child: AppTextField(
+      label: "Phone Number",
+      autocorrect: true,
+      enableSuggestions: false,
+      textCapitalization: TextCapitalization.words,
+      validator: (value) {
+        return null;
+      },
+      onSaved: (value) {
+        _firstName = value!;
+      },
+      margin: EdgeInsets.only(bottom: 15.0, top: 15.0),
+    ));
   }
 
   void _pickedImage(dynamic image) {
@@ -174,6 +199,7 @@ class _SignUpFormScreen extends State<SignUpFormScreen> {
         _userPassword.trim(),
         _firstName.trim(),
         _lastName.trim(),
+        _phoneNumber.trim(),
         // _userName.trim(),
         _userImageFile,
         false,

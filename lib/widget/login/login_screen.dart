@@ -55,6 +55,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
     // String username,
     String firstName,
     String lastName,
+    String phoneNumber,
     dynamic? image,
     bool isLogin,
     BuildContext ctx,
@@ -77,6 +78,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
         'first_name': firstName,
         'last_name': lastName,
         'email': email,
+        'phone_number': phoneNumber,
         'password': password,
         'image': image,
       }, signupLoginCompleter);

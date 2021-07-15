@@ -1,8 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:user_authentication/utils/app_colors.dart';
-
 
 class AppTextField extends StatefulWidget {
   final String? Function(String?)? validator;
@@ -27,6 +25,7 @@ class AppTextField extends StatefulWidget {
   final int? noOfLines;
   final TextStyle? textStyle;
   final bool autoFocus;
+  final bool isMandatory;
   final List<TextInputFormatter>? inputFormatters;
 
   AppTextField({
@@ -51,6 +50,7 @@ class AppTextField extends StatefulWidget {
     this.editable,
     this.controller,
     this.textInputType,
+    this.isMandatory = false,
     this.textCapitalization = TextCapitalization.none,
     this.autoFocus = false,
   });
@@ -122,7 +122,8 @@ class _AppTextFieldState extends State<AppTextField> {
 
                   contentPadding:
                       EdgeInsets.only(bottom: 10, left: 10, right: 10),
-                  hintText: widget.label,
+                  hintText:
+                      (widget.label ?? "") + (widget.isMandatory ? " *" : ""),
                   hintStyle: widget.textStyle ??
                       _themeData!.textTheme.subtitle1!
                           .copyWith(color: _themeData!.disabledColor),

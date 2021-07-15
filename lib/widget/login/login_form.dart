@@ -48,6 +48,7 @@ class LoginForm extends StatefulWidget {
     String password,
     String firstName,
     String lastName,
+    String phoneNumber,
     // String userName,
     dynamic? image,
     bool isLogin,
@@ -63,6 +64,7 @@ class _LoginFormState extends State<LoginForm> {
   var _isLogin = true;
   var _isForgotPassword = false;
   var _userEmail = '';
+  var _phoneNumber = '';
   // var _userName = '';
   var _firstName = '';
   var _lastName = '';
@@ -96,6 +98,7 @@ class _LoginFormState extends State<LoginForm> {
         _userPassword.trim(),
         _firstName.trim(),
         _lastName.trim(),
+        _phoneNumber.trim(),
         // _userName.trim(),
         _userImageFile!,
         _isLogin,
