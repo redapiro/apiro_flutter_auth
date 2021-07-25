@@ -194,9 +194,7 @@ class _LoginFormState extends State<LoginForm> {
                   ..onTap = () {
                     _onRegisterHereClick();
                   }),
-          ]
-          )
-      ),
+          ])),
     );
   }
 
@@ -307,8 +305,9 @@ class _LoginFormState extends State<LoginForm> {
                     .copyWith(color: _themeData!.primaryColor),
               ),
             ),
-            Expanded(child: Container()),
-            _getRegisterRow(),
+            // Expanded(child: Container()),
+            SizedBox(width: 15),
+            Expanded(child: _getRegisterRow()),
           ]),
           SizedBox(height: 15),
           _getHorizontalSeparatorLine(),
