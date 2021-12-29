@@ -20,6 +20,7 @@ class AuthenticationScreen extends StatefulWidget {
   final bool isFacebookLoginAvailable;
   final bool isAppleLoginAvailable;
   final bool isLoginWithApiroVisible;
+  final bool isRegisterHereVisible;
   final Widget? imageWidget;
 
   AuthenticationScreen(
@@ -38,6 +39,7 @@ class AuthenticationScreen extends StatefulWidget {
       this.isGithubLoginAvailable = false,
       this.isLoginWithApiroVisible = false,
       this.isFacebookLoginAvailable = false,
+      this.isRegisterHereVisible = true,
       this.isAppleLoginAvailable = false});
 
   @override
@@ -100,6 +102,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
         imageWidget: widget.imageWidget,
         onGoogleSignInClick: widget.onGoogleSignInClick,
         onAppleSignInClick: widget.onAppleSignInClick,
+        isRegisterHereVisible: widget.isRegisterHereVisible,
         onFacebookSignInClick: widget.onFacebookSignInClick,
         onGithubSignInClick: widget.onGithubSignInClick,
         onMicrosoftSignInClick: widget.onMicroSoftSignInClick,

@@ -25,6 +25,7 @@ class LoginForm extends StatefulWidget {
       this.isMicrosoftSignInAvailable,
       this.isGithubSignInAvailable,
       this.isLoginWithApiroVisible = false,
+      this.isRegisterHereVisible = true,
       this.isAppleSignInAvailable});
 
   final bool isLoading;
@@ -42,6 +43,7 @@ class LoginForm extends StatefulWidget {
   final bool? isGithubSignInAvailable;
   final bool? isAppleSignInAvailable;
   final bool? isLoginWithApiroVisible;
+  final bool isRegisterHereVisible;
 
   final void Function(
     String email,
@@ -307,7 +309,7 @@ class _LoginFormState extends State<LoginForm> {
             ),
             // Expanded(child: Container()),
             SizedBox(width: 15),
-            Expanded(child: _getRegisterRow()),
+            if(widget.isRegisterHereVisible) Expanded(child: _getRegisterRow()),
           ]),
           SizedBox(height: 15),
           _getHorizontalSeparatorLine(),
