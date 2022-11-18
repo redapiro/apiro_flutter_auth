@@ -70,8 +70,8 @@ class _UserImagePickerState extends State<UserImagePicker> {
             child: ClipRRect(
                 borderRadius: BorderRadius.circular(40),
                 child: _getUserImage())),
-        FlatButton.icon(
-          textColor: Theme.of(context).primaryColor,
+        TextButton.icon(style:TextButton.styleFrom(textStyle: TextStyle(color: Theme.of(context).primaryColor)),
+          // textColor: Theme.of(context).primaryColor,
           onPressed: _pickImage,
           icon: Icon(Icons.image),
           label: Text(widget.imageUrl != null ? "Change Image" : "Add Image"),

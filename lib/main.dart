@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
             )),
         fontFamily: 'Quicksand',
         textTheme: ThemeData.light().textTheme.copyWith(
-              title: TextStyle(
+              titleMedium: TextStyle(
                 fontFamily: "OpenSans",
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         appBarTheme: AppBarTheme(
           color: AppColors.primaryColor,
           textTheme: ThemeData.light().textTheme.copyWith(
-                  title: TextStyle(
+                  titleLarge: TextStyle(
                 fontFamily: 'OpenSans',
                 fontSize: 20,
                 // color: Colors.blueGrey[600],
