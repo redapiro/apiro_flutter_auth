@@ -58,10 +58,10 @@ class SocialButtonWidget extends StatelessWidget {
               ),
               borderRadius: BorderRadius.circular(5)),
           child: Row(children: [
-            Padding(
-                padding: EdgeInsets.only(left: 10, right: 10),
-                child: Image.asset(imagePath,
-                    width: 30, height: 30, fit: BoxFit.contain)),
+            // Padding(
+            //     padding: EdgeInsets.only(left: 10, right: 10),
+            //     child: Image.asset(imagePath,
+            //         width: 30, height: 30, fit: BoxFit.contain)),
             _getVerticalSeparatorLine(),
             Expanded(
               child: Padding(
