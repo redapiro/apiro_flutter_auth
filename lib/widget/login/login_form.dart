@@ -400,7 +400,7 @@ class _LoginFormState extends State<LoginForm> {
       },
       title: "Sign In With Apiro",
       isAvailable: (widget.isLoginWithApiroVisible ?? false),
-      // imagePath: "assets/images/apiro_logo.png",
+      imagePath: "assets/images/apiro_logo.png",
     );
   }
 
