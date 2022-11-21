@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:user_authentication/support_files/common_widgets/adaptive/adaptive_elevated_button.dart';
 import 'package:user_authentication/support_files/common_widgets/adaptive/text_field/app_text_field.dart';
 
+import '../../utils/app_colors.dart';
+
 class ForgotPasswordScreen extends StatefulWidget {
   ForgotPasswordScreen({required this.onForgotPassword});
 
@@ -53,7 +55,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           SizedBox(height: 20),
           if (this.isLoading) CircularProgressIndicator(),
           if (!this.isLoading)
-            AdaptiveElevatedButton(
+            AdaptiveElevatedButton(buttonBackgroundColor: AppColors.greenColor,
               text: "Submit",
               onPressed: _trySubmit,
             ),

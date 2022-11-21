@@ -120,13 +120,13 @@ class _LoginFormState extends State<LoginForm> {
         constraints: BoxConstraints(maxWidth: 450),
         child: Column(
           children: [
-            widget.imageWidget ??
-                Container(
-                  width: 120,
-                  height: 60,
-                  child:
-                      Image.asset("assets/images/logo.png", fit: BoxFit.cover),
-                ),
+            // widget.imageWidget ??
+            //     Container(
+            //       width: 120,
+            //       height: 60,
+            //       child:
+            //           Image.asset("assets/images/logo.png", fit: BoxFit.cover),
+            //     ),
             SizedBox(height: 20),
             Card(
               elevation: 2.0,
@@ -293,7 +293,7 @@ class _LoginFormState extends State<LoginForm> {
           SizedBox(height: 20),
           if (widget.isLoading) CircularProgressIndicator(),
           if (!widget.isLoading)
-            AdaptiveElevatedButton(
+            AdaptiveElevatedButton(buttonBackgroundColor: AppColors.greenColor,
               text: 'Sign In',
               onPressed: _trySubmit,
             ),
@@ -304,7 +304,7 @@ class _LoginFormState extends State<LoginForm> {
               child: Text(
                 "Forgot Password",
                 style: _themeData!.textTheme.subtitle2!
-                    .copyWith(color: _themeData!.primaryColor),
+                    .copyWith(color: AppColors.greenColor),
               ),
             ),
             // Expanded(child: Container()),
@@ -400,7 +400,7 @@ class _LoginFormState extends State<LoginForm> {
       },
       title: "Sign In With Apiro",
       isAvailable: (widget.isLoginWithApiroVisible ?? false),
-      imagePath: "assets/images/apiro_logo.png",
+      // imagePath: "assets/images/apiro_logo.png",
     );
   }
 

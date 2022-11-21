@@ -12,6 +12,7 @@ class AppColors {
   static Color disabledColor = Colors.grey.withOpacity(0.7);
   static Color dividerColor = Colors.black;
   static Color needleFillColor = Colors.green;
+  static Color greenColor = Color(0xff153730);
   static const Color selectedSideMenuOptionColor =
       Color.fromRGBO(14, 86, 168, 1.0);
   static const Color voilatedBlockingBackgroundColor =
