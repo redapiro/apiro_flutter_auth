@@ -22,25 +22,40 @@ class AuthenticationScreen extends StatefulWidget {
   final bool isLoginWithApiroVisible;
   final bool isRegisterHereVisible;
   final Widget? imageWidget;
+  final ButtonStyle? buttonStyle;
+  final Color? buttonBackgroundColor;
+  final Color? buttonForegroundColor;
+  final String? termsUrl;
+  final String? privacyPolicyUrl;
+  final String? companyName;
+  final bool? isProfileImageVisible;
 
-  AuthenticationScreen(
-      {required this.onForgotPassword,
-      required this.onLogin,
-      required this.onSignUp,
-      this.onGoogleSignInClick,
-      this.imageWidget,
-      this.onAppleSignInClick,
-      this.onMicroSoftSignInClick,
-      this.onGithubSignInClick,
-      this.onFacebookSignInClick,
-      this.onLoginWithApiroClick,
-      this.isMicrosoftLoginAvailable = false,
-      this.isGoogleLoginAvailable = false,
-      this.isGithubLoginAvailable = false,
-      this.isLoginWithApiroVisible = false,
-      this.isFacebookLoginAvailable = false,
-      this.isRegisterHereVisible = true,
-      this.isAppleLoginAvailable = false});
+  AuthenticationScreen({
+    required this.onForgotPassword,
+    required this.onLogin,
+    required this.onSignUp,
+    this.onGoogleSignInClick,
+    this.imageWidget,
+    this.onAppleSignInClick,
+    this.onMicroSoftSignInClick,
+    this.onGithubSignInClick,
+    this.onFacebookSignInClick,
+    this.onLoginWithApiroClick,
+    this.isMicrosoftLoginAvailable = false,
+    this.isGoogleLoginAvailable = false,
+    this.isGithubLoginAvailable = false,
+    this.isLoginWithApiroVisible = false,
+    this.isFacebookLoginAvailable = false,
+    this.isRegisterHereVisible = true,
+    this.isAppleLoginAvailable = false,
+    this.buttonStyle,
+    this.buttonForegroundColor,
+    this.buttonBackgroundColor,
+    this.termsUrl,
+    this.privacyPolicyUrl,
+    this.companyName,
+    this.isProfileImageVisible,
+  });
 
   @override
   _AuthenticationScreenState createState() => _AuthenticationScreenState();
@@ -68,6 +83,13 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
 
     signupLoginCompleter.future.whenComplete(() {
       _isLoading = false;
+      signupLoginCompleter = Completer();
+      if (mounted) setState(() {});
+    });
+
+    signupLoginCompleter.future.onError((error, s) {
+      _isLoading = false;
+      signupLoginCompleter = Completer();
       if (mounted) setState(() {});
     });
 
@@ -92,7 +114,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: Colors.transparent,
       body: LoginForm(
         _submitLoginForm,
         _isLoading,
@@ -113,6 +135,12 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
         isMicrosoftSignInAvailable: widget.isMicrosoftLoginAvailable,
         isLoginWithApiroVisible: widget.isLoginWithApiroVisible,
         onLoginWithApiroClick: widget.onLoginWithApiroClick,
+        buttonForegroundColor: widget.buttonForegroundColor,
+        buttonBackgroundColor: widget.buttonBackgroundColor,
+        termsUrl: widget.termsUrl,
+        privacyPolicyUrl: widget.privacyPolicyUrl,
+        companyName: widget.companyName,
+        isProfileImageVisible: widget.isProfileImageVisible,
       ),
     );
   }

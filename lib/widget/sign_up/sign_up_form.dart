@@ -18,11 +18,18 @@ class SignUpFormScreen extends StatefulWidget {
     bool isLogin,
     BuildContext ctx,
   ) submitFn;
+  final Color? buttonBackgroundColor;
+  final Color? buttonForegroundColor;
+  final bool? isProfileImageVisible;
 
   SignUpFormScreen({
     required this.isLoading,
     required this.submitFn,
+    this.buttonBackgroundColor,
+    this.buttonForegroundColor,
+    this.isProfileImageVisible,
   });
+
   @override
   _SignUpFormScreen createState() {
     return _SignUpFormScreen();
@@ -58,7 +65,9 @@ class _SignUpFormScreen extends State<SignUpFormScreen> {
         key: _formKey,
         child: Column(
           children: [
-            UserImagePicker(_pickedImage),
+            widget.isProfileImageVisible ?? true
+                ? UserImagePicker(_pickedImage)
+                : SizedBox(),
             AppTextField(
               label: "First name",
               autocorrect: true,
@@ -151,6 +160,8 @@ class _SignUpFormScreen extends State<SignUpFormScreen> {
               AdaptiveElevatedButton(
                 text: 'Signup',
                 onPressed: _trySubmit,
+                buttonBackgroundColor: widget.buttonBackgroundColor,
+                buttonForegroundColor: widget.buttonForegroundColor,
               ),
             SizedBox(height: 10),
           ],
@@ -167,7 +178,8 @@ class _SignUpFormScreen extends State<SignUpFormScreen> {
 
       inputFormatters: <TextInputFormatter>[
         FilteringTextInputFormatter.digitsOnly
-      ], // On
+      ],
+      // On
       validator: (value) {
         return null;
       },

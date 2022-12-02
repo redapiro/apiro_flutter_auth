@@ -3,30 +3,40 @@ import 'dart:io';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'package:user_authentication/support_files/common_widgets/adaptive/adaptive_elevated_button.dart';
 import 'package:user_authentication/support_files/common_widgets/adaptive/text_field/app_text_field.dart';
 import 'package:user_authentication/utils/app_colors.dart';
 import 'package:user_authentication/widget/forgot_password/forgot_password_form.dart';
 import 'package:user_authentication/widget/sign_up/sign_up_form.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:user_authentication/widget/social_button/social_button_widget.dart';
 
 class LoginForm extends StatefulWidget {
-  LoginForm(this.submitFn, this.isLoading, this.onForgotPassword,
-      {this.imageWidget,
-      this.onGoogleSignInClick,
-      this.onAppleSignInClick,
-      this.onFacebookSignInClick,
-      this.onGithubSignInClick,
-      this.onMicrosoftSignInClick,
-      this.isFacebookSignInAvailable,
-      this.isGoogleSignInAvailable,
-      this.onLoginWithApiroClick,
-      this.isMicrosoftSignInAvailable,
-      this.isGithubSignInAvailable,
-      this.isLoginWithApiroVisible = false,
-      this.isRegisterHereVisible = true,
-      this.isAppleSignInAvailable});
+  LoginForm(
+    this.submitFn,
+    this.isLoading,
+    this.onForgotPassword, {
+    this.imageWidget,
+    this.onGoogleSignInClick,
+    this.onAppleSignInClick,
+    this.onFacebookSignInClick,
+    this.onGithubSignInClick,
+    this.onMicrosoftSignInClick,
+    this.isFacebookSignInAvailable,
+    this.isGoogleSignInAvailable,
+    this.onLoginWithApiroClick,
+    this.isMicrosoftSignInAvailable,
+    this.isGithubSignInAvailable,
+    this.isLoginWithApiroVisible = false,
+    this.isRegisterHereVisible = true,
+    this.buttonForegroundColor,
+    this.buttonBackgroundColor,
+    this.isAppleSignInAvailable,
+    this.termsUrl,
+    this.privacyPolicyUrl,
+    this.companyName,
+    this.isProfileImageVisible,
+  });
 
   final bool isLoading;
   final Widget? imageWidget;
@@ -44,6 +54,12 @@ class LoginForm extends StatefulWidget {
   final bool? isAppleSignInAvailable;
   final bool? isLoginWithApiroVisible;
   final bool isRegisterHereVisible;
+  final Color? buttonBackgroundColor;
+  final Color? buttonForegroundColor;
+  final String? termsUrl;
+  final String? privacyPolicyUrl;
+  final String? companyName;
+  final bool? isProfileImageVisible;
 
   final void Function(
     String email,
@@ -52,7 +68,7 @@ class LoginForm extends StatefulWidget {
     String lastName,
     String phoneNumber,
     // String userName,
-    dynamic? image,
+    dynamic image,
     bool isLogin,
     BuildContext ctx,
   ) submitFn;
@@ -63,15 +79,19 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
+
+  //TODO use proper variable type
+  // TODO null-safety is missing
   var _isLogin = true;
   var _isForgotPassword = false;
   var _userEmail = '';
   var _phoneNumber = '';
+
   // var _userName = '';
   var _firstName = '';
   var _lastName = '';
   var _userPassword = '';
-  dynamic? _userImageFile = File("dummy.txt");
+  dynamic _userImageFile = File("dummy.txt");
   ThemeData? _themeData;
   late Completer loginWithApiroCompleter;
 
@@ -114,64 +134,63 @@ class _LoginFormState extends State<LoginForm> {
     _themeData = Theme.of(context);
 
     return Scaffold(
+        backgroundColor: Colors.transparent,
         body: Center(
             child: SingleChildScrollView(
-      child: Container(
-        constraints: BoxConstraints(maxWidth: 450),
-        child: Column(
-          children: [
-            // widget.imageWidget ??
-            //     Container(
-            //       width: 120,
-            //       height: 60,
-            //       child:
-            //           Image.asset("assets/images/logo.png", fit: BoxFit.cover),
-            //     ),
-            SizedBox(height: 20),
-            Card(
-              elevation: 2.0,
-              margin: EdgeInsets.all(20),
-              child: Padding(
-                padding: EdgeInsets.all(16),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _getAuthForm(),
-                    RichText(
-                        text: TextSpan(children: [
-                      TextSpan(
-                          text: "By signing in, you agree to Apiro's",
-                          style: _themeData!.textTheme.subtitle2!),
-                      TextSpan(
-                          text: " Terms of Use ",
-                          style: _themeData!.textTheme.subtitle2!
-                              .copyWith(color: AppColors.appBlueColor),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              _onTermsOfUserClick();
-                            }),
-                      TextSpan(
-                          text: " and ",
-                          style: _themeData!.textTheme.subtitle2!),
-                      TextSpan(
-                          text: "Privacy Policy.",
-                          style: _themeData!.textTheme.subtitle2!
-                              .copyWith(color: AppColors.appBlueColor),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              _onPrivacyPolicyClick();
-                            }),
-                    ])),
-                    SizedBox(height: 5),
-                    SizedBox(height: 11),
-                  ],
+          child: Container(
+            constraints: BoxConstraints(maxWidth: 450),
+            child: Column(
+              children: [
+                widget.imageWidget ?? Container(),
+                SizedBox(height: 20),
+                Card(
+                  elevation: 2.0,
+                  margin: EdgeInsets.all(20),
+                  child: Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _getAuthForm(),
+                        RichText(
+                            text: TextSpan(children: [
+                          TextSpan(
+                              text:
+                                  "By signing in, you agree to ${widget.companyName}",
+                              style: _themeData!.textTheme.subtitle2!),
+                          TextSpan(
+                              text: " Terms of Use ",
+                              style: _themeData!.textTheme.subtitle2!
+                                  .copyWith(color: AppColors.appBlueColor),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  _onTermsOfUserClick(
+                                      widget.termsUrl ?? "www.google.com");
+                                }),
+                          TextSpan(
+                              text: " and ",
+                              style: _themeData!.textTheme.subtitle2!),
+                          TextSpan(
+                              text: "Privacy Policy.",
+                              style: _themeData!.textTheme.subtitle2!
+                                  .copyWith(color: AppColors.appBlueColor),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  _onPrivacyPolicyClick(
+                                      widget.privacyPolicyUrl ??
+                                          "www.google.com");
+                                }),
+                        ])),
+                        SizedBox(height: 5),
+                        SizedBox(height: 11),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
-      ),
-    )));
+          ),
+        )));
   }
 
   Widget _getRegisterRow() {
@@ -226,6 +245,8 @@ class _LoginFormState extends State<LoginForm> {
               this.isSignUpWithSocialButtonAvailable = false;
               setState(() {});
             },
+            buttonBackgroundColor: widget.buttonBackgroundColor,
+            buttonForegroundColor: widget.buttonForegroundColor,
           ),
           SizedBox(height: 15),
           _getRegisterRow(),
@@ -238,6 +259,9 @@ class _LoginFormState extends State<LoginForm> {
             SignUpFormScreen(
               isLoading: widget.isLoading,
               submitFn: widget.submitFn,
+              buttonForegroundColor: widget.buttonForegroundColor,
+              buttonBackgroundColor: widget.buttonBackgroundColor,
+              isProfileImageVisible: widget.isProfileImageVisible,
             ),
             _getRegisterRow(),
             SizedBox(height: 5)
@@ -293,7 +317,9 @@ class _LoginFormState extends State<LoginForm> {
           SizedBox(height: 20),
           if (widget.isLoading) CircularProgressIndicator(),
           if (!widget.isLoading)
-            AdaptiveElevatedButton(buttonBackgroundColor: AppColors.greenColor,
+            AdaptiveElevatedButton(
+              buttonBackgroundColor: widget.buttonBackgroundColor,
+              buttonForegroundColor: widget.buttonForegroundColor,
               text: 'Sign In',
               onPressed: _trySubmit,
             ),
@@ -309,7 +335,8 @@ class _LoginFormState extends State<LoginForm> {
             ),
             // Expanded(child: Container()),
             SizedBox(width: 15),
-            if(widget.isRegisterHereVisible) Expanded(child: _getRegisterRow()),
+            if (widget.isRegisterHereVisible)
+              Expanded(child: _getRegisterRow()),
           ]),
           SizedBox(height: 15),
           _getHorizontalSeparatorLine(),
@@ -400,7 +427,7 @@ class _LoginFormState extends State<LoginForm> {
       },
       title: "Sign In With Apiro",
       isAvailable: (widget.isLoginWithApiroVisible ?? false),
-      imagePath: "assets/images/apiro_logo.png",
+      imagePath: "assets/images/logo.png",
     );
   }
 
@@ -411,9 +438,9 @@ class _LoginFormState extends State<LoginForm> {
     });
   }
 
-  void _onTermsOfUserClick() {
-    print("Terms of Use pressed");
-    launch("https://google.com");
+  void _onTermsOfUserClick(String termsUrl) {
+    print("Terms of Use pressed : $termsUrl");
+    launchUrlString(termsUrl);
   }
 
   void _onRegisterHereClick() {
@@ -432,8 +459,8 @@ class _LoginFormState extends State<LoginForm> {
     }
   }
 
-  void _onPrivacyPolicyClick() {
-    print("privacy policy pressed");
-    launch("https://google.com");
+  void _onPrivacyPolicyClick(String privacyPolicyUrl) {
+    print("privacy policy pressed : $privacyPolicyUrl");
+    launchUrlString(privacyPolicyUrl);
   }
 }

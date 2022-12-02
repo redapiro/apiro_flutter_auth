@@ -13,6 +13,7 @@ class AdaptiveElevatedButton extends StatelessWidget {
   final double? height;
   final BoxDecoration? decoration;
   final Color? buttonBackgroundColor;
+  final Color? buttonForegroundColor;
 
   AdaptiveElevatedButton({
     this.onPressed,
@@ -23,6 +24,7 @@ class AdaptiveElevatedButton extends StatelessWidget {
     this.text,
     this.decoration,
     this.buttonBackgroundColor,
+    this.buttonForegroundColor,
   });
 
   @override
@@ -48,9 +50,10 @@ class AdaptiveElevatedButton extends StatelessWidget {
       child: ElevatedButton(
         style: this.style ??
             ElevatedButton.styleFrom(
-              primary:
+              foregroundColor: this.buttonForegroundColor ??
+                  Theme.of(context).scaffoldBackgroundColor,
+              backgroundColor:
                   this.buttonBackgroundColor ?? Theme.of(context).primaryColor,
-              onPrimary: Theme.of(context).scaffoldBackgroundColor,
             ),
         child: this.child ??
             Text(
