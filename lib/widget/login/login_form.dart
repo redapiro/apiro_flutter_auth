@@ -35,7 +35,7 @@ class LoginForm extends StatefulWidget {
     this.termsUrl,
     this.privacyPolicyUrl,
     this.companyName,
-    this.isProfileImageVisible,
+    this.isProfileImageVisible,this.isForgotPasswordVisible
   });
 
   final bool isLoading;
@@ -54,6 +54,7 @@ class LoginForm extends StatefulWidget {
   final bool? isAppleSignInAvailable;
   final bool? isLoginWithApiroVisible;
   final bool isRegisterHereVisible;
+  final bool ? isForgotPasswordVisible;
   final Color? buttonBackgroundColor;
   final Color? buttonForegroundColor;
   final String? termsUrl;
@@ -325,6 +326,7 @@ class _LoginFormState extends State<LoginForm> {
             ),
           SizedBox(height: 10),
           Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+            if(widget.isForgotPasswordVisible != false)
             InkWell(
               onTap: _onForgotPasswordTap,
               child: Text(
