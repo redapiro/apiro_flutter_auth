@@ -29,7 +29,7 @@ class AuthenticationScreen extends StatefulWidget {
   final String? privacyPolicyUrl;
   final String? companyName;
   final bool? isProfileImageVisible;
-  final bool ? isForgotPasswordVisible;
+  final bool? isForgotPasswordVisible;
 
   AuthenticationScreen({
     required this.onForgotPassword,
@@ -49,7 +49,8 @@ class AuthenticationScreen extends StatefulWidget {
     this.isFacebookLoginAvailable = false,
     this.isRegisterHereVisible = true,
     this.isAppleLoginAvailable = false,
-    this.buttonStyle,this.isForgotPasswordVisible,
+    this.buttonStyle,
+    this.isForgotPasswordVisible,
     this.buttonForegroundColor,
     this.buttonBackgroundColor,
     this.termsUrl,
@@ -128,6 +129,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
         isRegisterHereVisible: widget.isRegisterHereVisible,
         onFacebookSignInClick: widget.onFacebookSignInClick,
         onGithubSignInClick: widget.onGithubSignInClick,
+        isForgotPasswordVisible: widget.isForgotPasswordVisible,
         onMicrosoftSignInClick: widget.onMicroSoftSignInClick,
         isAppleSignInAvailable: widget.isAppleLoginAvailable,
         isFacebookSignInAvailable: widget.isFacebookLoginAvailable,
