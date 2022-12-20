@@ -54,6 +54,7 @@ class AppTextField extends StatefulWidget {
     this.textCapitalization = TextCapitalization.none,
     this.autoFocus = false,
   });
+
   @override
   _AppTextFieldState createState() {
     return _AppTextFieldState();
@@ -120,8 +121,7 @@ class _AppTextFieldState extends State<AppTextField> {
                   //       )
                   //     : null,
 
-                  contentPadding:
-                      EdgeInsets.only(bottom: 10, left: 10, right: 10),
+                  contentPadding: EdgeInsets.all(10),
                   hintText:
                       (widget.label ?? "") + (widget.isMandatory ? " *" : ""),
                   hintStyle: widget.textStyle ??

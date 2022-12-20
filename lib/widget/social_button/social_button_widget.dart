@@ -62,7 +62,7 @@ class SocialButtonWidget extends StatelessWidget {
             //     padding: EdgeInsets.only(left: 10, right: 10),
             //     child: Image.asset(imagePath,
             //         width: 30, height: 30, fit: BoxFit.contain)),
-            _getVerticalSeparatorLine(),
+            // _getVerticalSeparatorLine(),
             Expanded(
               child: Padding(
                   padding: EdgeInsets.only(left: 10, right: 10),
