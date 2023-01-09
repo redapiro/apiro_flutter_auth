@@ -55,7 +55,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           SizedBox(height: 20),
           if (this.isLoading) CircularProgressIndicator(),
           if (!this.isLoading)
-            AdaptiveElevatedButton(buttonBackgroundColor: AppColors.greenColor,
+            AdaptiveElevatedButton(buttonBackgroundColor: AppColors.primaryColor,
               text: "Submit",
               onPressed: _trySubmit,
             ),
