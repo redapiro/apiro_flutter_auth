@@ -35,7 +35,9 @@ class LoginForm extends StatefulWidget {
     this.termsUrl,
     this.privacyPolicyUrl,
     this.companyName,
-    this.isProfileImageVisible,this.isForgotPasswordVisible
+    this.isProfileImageVisible,
+    this.isForgotPasswordVisible,
+    this.loginWithApiroKey,
   });
 
   final bool isLoading;
@@ -54,13 +56,14 @@ class LoginForm extends StatefulWidget {
   final bool? isAppleSignInAvailable;
   final bool? isLoginWithApiroVisible;
   final bool isRegisterHereVisible;
-  final bool ? isForgotPasswordVisible;
+  final bool? isForgotPasswordVisible;
   final Color? buttonBackgroundColor;
   final Color? buttonForegroundColor;
   final String? termsUrl;
   final String? privacyPolicyUrl;
   final String? companyName;
   final bool? isProfileImageVisible;
+  final Key? loginWithApiroKey;
 
   final void Function(
     String email,
@@ -421,7 +424,7 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   Widget _getDebugDemoUserButton() {
-    return SocialButtonWidget(
+    return SocialButtonWidget(key: widget.loginWithApiroKey,
       onButtonPress: (completer) {
         if (widget.onLoginWithApiroClick != null) {
           widget.onLoginWithApiroClick!(completer);

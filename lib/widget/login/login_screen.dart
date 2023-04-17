@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:user_authentication/widget/login/login_form.dart';
 import 'package:intl/intl.dart';
+import 'package:user_authentication/widget/login/login_form.dart';
 
 class AuthenticationScreen extends StatefulWidget {
   final Function(Map<String, dynamic>, Completer) onLogin;
@@ -30,34 +30,35 @@ class AuthenticationScreen extends StatefulWidget {
   final String? companyName;
   final bool? isProfileImageVisible;
   final bool? isForgotPasswordVisible;
+  final Key? loginWithApiroKey;
 
-  AuthenticationScreen({
-    required this.onForgotPassword,
-    required this.onLogin,
-    required this.onSignUp,
-    this.onGoogleSignInClick,
-    this.imageWidget,
-    this.onAppleSignInClick,
-    this.onMicroSoftSignInClick,
-    this.onGithubSignInClick,
-    this.onFacebookSignInClick,
+  AuthenticationScreen(
+      {required this.onForgotPassword,
+      required this.onLogin,
+      required this.onSignUp,
+      this.onGoogleSignInClick,
+      this.imageWidget,
+      this.onAppleSignInClick,
+      this.onMicroSoftSignInClick,
+      this.onGithubSignInClick,
+      this.onFacebookSignInClick,
     this.onLoginWithApiroClick,
     this.isMicrosoftLoginAvailable = false,
     this.isGoogleLoginAvailable = false,
     this.isGithubLoginAvailable = false,
     this.isLoginWithApiroVisible = false,
-    this.isFacebookLoginAvailable = false,
-    this.isRegisterHereVisible = true,
-    this.isAppleLoginAvailable = false,
-    this.buttonStyle,
-    this.isForgotPasswordVisible,
-    this.buttonForegroundColor,
-    this.buttonBackgroundColor,
-    this.termsUrl,
-    this.privacyPolicyUrl,
-    this.companyName,
-    this.isProfileImageVisible,
-  });
+      this.isFacebookLoginAvailable = false,
+      this.isRegisterHereVisible = true,
+      this.isAppleLoginAvailable = false,
+      this.buttonStyle,
+      this.isForgotPasswordVisible,
+      this.buttonForegroundColor,
+      this.buttonBackgroundColor,
+      this.termsUrl,
+      this.privacyPolicyUrl,
+      this.companyName,
+      this.isProfileImageVisible,
+      this.loginWithApiroKey});
 
   @override
   _AuthenticationScreenState createState() => _AuthenticationScreenState();
@@ -144,6 +145,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
         privacyPolicyUrl: widget.privacyPolicyUrl,
         companyName: widget.companyName,
         isProfileImageVisible: widget.isProfileImageVisible,
+        loginWithApiroKey: widget.loginWithApiroKey,
       ),
     );
   }
