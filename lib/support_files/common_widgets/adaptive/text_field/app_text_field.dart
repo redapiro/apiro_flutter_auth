@@ -106,20 +106,20 @@ class _AppTextFieldState extends State<AppTextField> {
                   errorMaxLines: 4,
                   focusedErrorBorder: null,
                   disabledBorder: widget.border ?? border,
-                  // suffixIcon: (widget.isPasswordField ?? false)
-                  //     ? InkWell(
-                  //         child: Icon(Icons.remove_red_eye,
-                  //             color: !obscureTextFlag
-                  //                 ? _themeData!.highlightColor
-                  //                 : _themeData!.disabledColor),
-                  //         onTap: () {
-                  //           setState(() {
-                  //             FocusScope.of(context).requestFocus(FocusNode());
-                  //             obscureTextFlag = !obscureTextFlag;
-                  //           });
-                  //         },
-                  //       )
-                  //     : null,
+                  suffixIcon: (widget.isPasswordField ?? false)
+                      ? InkWell(
+                          child: Icon(Icons.remove_red_eye,
+                              color: !obscureTextFlag
+                                  ? _themeData!.highlightColor
+                                  : _themeData!.disabledColor),
+                          onTap: () {
+                            setState(() {
+                              FocusScope.of(context).requestFocus(FocusNode());
+                              obscureTextFlag = !obscureTextFlag;
+                            });
+                          },
+                        )
+                      : null,
 
                   contentPadding: EdgeInsets.all(10),
                   hintText:

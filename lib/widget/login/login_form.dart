@@ -293,7 +293,7 @@ class _LoginFormState extends State<LoginForm> {
             label: "Email",
             // controller: TextEditingController(),
             validator: (value) {
-              if (value!.isEmpty || !value.contains('@')) {
+              if (value!.isEmpty) {
                 return "Not a valid email";
               }
               return null;
