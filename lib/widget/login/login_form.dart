@@ -302,12 +302,12 @@ class _LoginFormState extends State<LoginForm> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             AppTextField(
-              label: "Email",
+              label: "Username",
               focusNode: _emailFocusNode,
               // controller: TextEditingController(),
               validator: (value) {
                 if (value!.isEmpty) {
-                  return "Not a valid email";
+                  return "Not a valid Username";
                 }
                 return null;
               },
