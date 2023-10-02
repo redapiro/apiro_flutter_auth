@@ -98,6 +98,8 @@ class _LoginFormState extends State<LoginForm> {
   dynamic _userImageFile = File("dummy.txt");
   ThemeData? _themeData;
   late Completer loginWithApiroCompleter;
+  FocusNode _emailFocusNode = FocusNode();
+  FocusNode _passwordFocusNode = FocusNode();
 
   bool isLoginWithApiroLoading = false;
   bool isSignUpWithSocialButtonAvailable = true;
@@ -134,6 +136,14 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    _emailFocusNode.dispose();
+    _passwordFocusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     _themeData = Theme.of(context);
 
@@ -156,35 +166,35 @@ class _LoginFormState extends State<LoginForm> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         _getAuthForm(),
-                        RichText(
-                            text: TextSpan(children: [
-                          TextSpan(
-                              text:
-                                  "By signing in, you agree to ${widget.companyName}",
-                              style: _themeData!.textTheme.subtitle2!),
-                          TextSpan(
-                              text: " Terms of Use ",
-                              style: _themeData!.textTheme.subtitle2!
-                                  .copyWith(color: AppColors.appBlueColor),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  _onTermsOfUserClick(
-                                      widget.termsUrl ?? "www.google.com");
-                                }),
-                          TextSpan(
-                              text: " and ",
-                              style: _themeData!.textTheme.subtitle2!),
-                          TextSpan(
-                              text: "Privacy Policy.",
-                              style: _themeData!.textTheme.subtitle2!
-                                  .copyWith(color: AppColors.appBlueColor),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  _onPrivacyPolicyClick(
-                                      widget.privacyPolicyUrl ??
-                                          "www.google.com");
-                                }),
-                        ])),
+                        // RichText(
+                        //     text: TextSpan(children: [
+                        //   TextSpan(
+                        //       text:
+                        //           "By signing in, you agree to ${widget.companyName}",
+                        //       style: _themeData!.textTheme.subtitle2!),
+                        //   TextSpan(
+                        //       text: " Terms of Use ",
+                        //       style: _themeData!.textTheme.subtitle2!
+                        //           .copyWith(color: AppColors.appBlueColor),
+                        //       recognizer: TapGestureRecognizer()
+                        //         ..onTap = () {
+                        //           _onTermsOfUserClick(
+                        //               widget.termsUrl ?? "www.google.com");
+                        //         }),
+                        //   TextSpan(
+                        //       text: " and ",
+                        //       style: _themeData!.textTheme.subtitle2!),
+                        //   TextSpan(
+                        //       text: "Privacy Policy.",
+                        //       style: _themeData!.textTheme.subtitle2!
+                        //           .copyWith(color: AppColors.appBlueColor),
+                        //       recognizer: TapGestureRecognizer()
+                        //         ..onTap = () {
+                        //           _onPrivacyPolicyClick(
+                        //               widget.privacyPolicyUrl ??
+                        //                   "www.google.com");
+                        //         }),
+                        // ])),
                         SizedBox(height: 5),
                         SizedBox(height: 11),
                       ],
@@ -284,79 +294,92 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   Widget _getLoginForm() {
-    return Form(
-      key: _formKey,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          AppTextField(
-            label: "Email",
-            // controller: TextEditingController(),
-            validator: (value) {
-              if (value!.isEmpty) {
-                return "Not a valid email";
-              }
-              return null;
-            },
-            textInputType: TextInputType.emailAddress,
-            onSaved: (value) {
-              _userEmail = value!;
-            },
-          ),
-          SizedBox(height: 15),
-          AppTextField(
-            label: "Password",
-            isPasswordField: true,
-            validator: (value) {
-              if (value!.isEmpty || value.length < 7) {
-                return "Password must be at least 7 characters long";
-              }
-              return null;
-            },
-            onSaved: (value) {
-              _userPassword = value!;
-            },
-            // controller: TextEditingController(),
-          ),
-          SizedBox(height: 20),
-          if (widget.isLoading) CircularProgressIndicator(),
-          if (!widget.isLoading)
-            AdaptiveElevatedButton(
-              buttonBackgroundColor: widget.buttonBackgroundColor,
-              buttonForegroundColor: widget.buttonForegroundColor,
-              text: 'Sign In',
-              onPressed: _trySubmit,
+    return FocusTraversalGroup(
+      policy: OrderedTraversalPolicy(),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            AppTextField(
+              label: "Email",
+              focusNode: _emailFocusNode,
+              // controller: TextEditingController(),
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return "Not a valid email";
+                }
+                return null;
+              },
+              onFieldSubmit: (val) {
+                _userEmail = val!;
+                FocusScope.of(context).requestFocus(_passwordFocusNode);
+              },
+              textInputType: TextInputType.emailAddress,
+              onSaved: (value) {
+                _userEmail = value!;
+              },
             ),
-          SizedBox(height: 10),
-          Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-            if(widget.isForgotPasswordVisible != false)
-            InkWell(
-              onTap: _onForgotPasswordTap,
-              child: Text(
-                "Forgot Password",
-                style: _themeData!.textTheme.subtitle2!
-                    .copyWith(color: AppColors.greenColor),
+            SizedBox(height: 15),
+            AppTextField(
+              label: "Password",
+              focusNode: _passwordFocusNode,
+              isPasswordField: true,
+              validator: (value) {
+                if (value!.isEmpty || value.length < 7) {
+                  return "Password must be at least 7 characters long";
+                }
+                return null;
+              },
+              onSaved: (value) {
+                _userPassword = value!;
+              },
+              onFieldSubmit: (value) {
+                _userPassword = value!;
+                _trySubmit();
+              },
+              // controller: TextEditingController(),
+            ),
+            SizedBox(height: 20),
+            if (widget.isLoading) CircularProgressIndicator(),
+            if (!widget.isLoading)
+              AdaptiveElevatedButton(
+                buttonBackgroundColor: widget.buttonBackgroundColor,
+                buttonForegroundColor: widget.buttonForegroundColor,
+                text: 'Sign In',
+                onPressed: _trySubmit,
               ),
-            ),
-            // Expanded(child: Container()),
-            SizedBox(width: 15),
-            if (widget.isRegisterHereVisible)
-              Expanded(child: _getRegisterRow()),
-          ]),
-          SizedBox(height: 15),
-          _getHorizontalSeparatorLine(),
-          _getSocialLoginAvailableButtons(),
-          _getDebugDemoUserButton(),
-          /* SizedBox(height: 15),
-          _getSocialLoginButton(
-              imagePath: "assets/images/amazon.png",
-              title: appLocale.sign_in_with_aws,
-              onPress: () {
-                _onSignInWithAWSClick();
-              }),
-          */
-          SizedBox(height: 15),
-        ],
+            SizedBox(height: 10),
+            Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+              if (widget.isForgotPasswordVisible != false)
+                InkWell(
+                  onTap: _onForgotPasswordTap,
+                  child: Text(
+                    "Forgot Password",
+                    style: _themeData!.textTheme.subtitle2!
+                        .copyWith(color: AppColors.greenColor),
+                  ),
+                ),
+              // Expanded(child: Container()),
+              SizedBox(width: 15),
+              if (widget.isRegisterHereVisible)
+                Expanded(child: _getRegisterRow()),
+            ]),
+            SizedBox(height: 15),
+            _getHorizontalSeparatorLine(),
+            _getSocialLoginAvailableButtons(),
+            _getDebugDemoUserButton(),
+            /* SizedBox(height: 15),
+            _getSocialLoginButton(
+                imagePath: "assets/images/amazon.png",
+                title: appLocale.sign_in_with_aws,
+                onPress: () {
+                  _onSignInWithAWSClick();
+                }),
+            */
+            SizedBox(height: 15),
+          ],
+        ),
       ),
     );
   }

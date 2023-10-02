@@ -8,6 +8,7 @@ class AppTextField extends StatefulWidget {
   final String? label;
   final FocusNode? focusNode;
   final void Function(String?)? onSaved;
+  final void Function(String?)? onFieldSubmit;
   final TextCapitalization textCapitalization;
   final Color? backgroundColor;
   final TextEditingController? controller;
@@ -31,6 +32,7 @@ class AppTextField extends StatefulWidget {
   AppTextField({
     this.label,
     this.validator,
+    this.onFieldSubmit,
     this.onTap,
     this.border,
     this.onSaved,
@@ -86,6 +88,7 @@ class _AppTextFieldState extends State<AppTextField> {
           child: TextFormField(
               focusNode: widget.focusNode ?? FocusNode(),
               autofocus: widget.autoFocus,
+              onFieldSubmitted: widget.onFieldSubmit,
               onEditingComplete: widget.onEditingComplete ?? () {},
               enabled: widget.editable,
               key: ValueKey(widget.label),
