@@ -11,6 +11,7 @@ class AdaptiveElevatedButton extends StatelessWidget {
   final ButtonStyle? style;
   final double? width;
   final double? height;
+  final TextStyle ? textStyle;
   final BoxDecoration? decoration;
   final Color? buttonBackgroundColor;
   final Color? buttonForegroundColor;
@@ -18,7 +19,7 @@ class AdaptiveElevatedButton extends StatelessWidget {
   AdaptiveElevatedButton({
     this.onPressed,
     this.style,
-    this.width,
+    this.width,this.textStyle,
     this.height,
     this.child,
     this.text,
@@ -58,7 +59,7 @@ class AdaptiveElevatedButton extends StatelessWidget {
         child: this.child ??
             Text(
               text ?? "",
-              style: TextStyle(
+              style: textStyle ?? TextStyle(
                 fontWeight: FontWeight.bold,
               ),
             ),

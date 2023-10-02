@@ -7,9 +7,10 @@ import 'package:user_authentication/support_files/common_widgets/adaptive/text_f
 import '../../utils/app_colors.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
-  ForgotPasswordScreen({required this.onForgotPassword});
+  ForgotPasswordScreen({required this.onForgotPassword, this.onCancel});
 
   Function(String, Completer) onForgotPassword;
+  VoidCallback? onCancel;
 
   @override
   _ForgotPasswordScreenState createState() => _ForgotPasswordScreenState();
@@ -55,9 +56,29 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           SizedBox(height: 20),
           if (this.isLoading) CircularProgressIndicator(),
           if (!this.isLoading)
-            AdaptiveElevatedButton(buttonBackgroundColor: AppColors.primaryColor,
-              text: "Submit",
-              onPressed: _trySubmit,
+            Row(
+              children: [
+                Spacer(flex: 2),
+                Expanded(
+                  child: AdaptiveElevatedButton(
+                    decoration: BoxDecoration(
+                        border: Border.all(color: AppColors.separatorColor)),
+                    buttonBackgroundColor: Colors.white,
+                    text: "Cancel",
+                    textStyle: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.black),
+                    onPressed: widget.onCancel,
+                  ),
+                ),
+                SizedBox(width: 10),
+                Expanded(
+                  child: AdaptiveElevatedButton(
+                    buttonBackgroundColor: AppColors.primaryColor,
+                    text: "Submit",
+                    onPressed: _trySubmit,
+                  ),
+                ),
+              ],
             ),
           SizedBox(height: 15),
         ]));

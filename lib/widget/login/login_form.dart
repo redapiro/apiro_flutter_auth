@@ -242,8 +242,9 @@ class _LoginFormState extends State<LoginForm> {
             onForgotPassword: (email, completer) {
               widget.onForgotPassword(email, completer);
             },
+            onCancel: () => _onRegisterHereClick(),
           ),
-          _getRegisterRow()
+          // _getRegisterRow()
         ],
       );
     }
